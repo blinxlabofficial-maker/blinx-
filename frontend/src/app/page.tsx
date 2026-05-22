@@ -13,11 +13,10 @@ import DotNavigation from "@/components/DotNavigation";
 // Staggered reveal animation variant
 const revealVariant = {
   hidden: { opacity: 0 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     transition: {
       duration: 0.8,
-      ease: "easeOut",
       staggerChildren: 0.2
     }
   }

@@ -192,7 +192,7 @@ export default function FlowCanvas() {
         drag 
         dragConstraints={containerRef}
         dragElastic={0.2}
-        initial={{ x: 100, y: window.innerHeight / 2 - 60 }} // Start slightly offset so root is visible
+        initial={{ x: 100, y: typeof window !== 'undefined' ? window.innerHeight / 2 - 60 : 0 }} // Start slightly offset so root is visible
         animate={{ scale }}
         transition={{ type: "spring", stiffness: 400, damping: 40 }}
         className="absolute w-[8000px] h-[8000px] left-[-4000px] top-[-4000px]"
