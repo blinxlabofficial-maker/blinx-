@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blinx Lab — Flowchart Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#090807;
+    --panel:#141210;
+    --panel-2:#1c1915;
+    --line:#2f2a22;
+    --line-2:#5b4a2e;
+    --gold:#d2b074;
+    --gold-2:#f0d59c;
+    --cream:#f2eadb;
+    --muted:#8a7f6b;
+    --shadow:rgba(0,0,0,.5);
+    --blue:#73a9ff;
+    --green:#78d59e;
+    --red:#ef7f5f;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--cream);font-family:'DM Mono',monospace;cursor:grab}
+  body.dragging{cursor:grabbing}
+
+  body::before{
+    content:"";
+    position:fixed;inset:0;pointer-events:none;z-index:1000;opacity:.18;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  }
+
+  .grid{
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,.08) 1px, transparent 0),
+      radial-gradient(circle at 1px 1px, rgba(210,176,116,.08) 1px, transparent 0);
+    background-size:32px 32px, 128px 128px;
+    background-position:0 0, 0 0;
+    opacity:.45;
+  }
+
+  .spotlight{
+    position:fixed;inset:0;pointer-events:none;z-index:1;
+    background:radial-gradient(circle at var(--mx) var(--my), rgba(210,176,116,.11), transparent 28%);
+    mix-blend-mode:screen;
+  }
+
+  .hud{
+    position:fixed;left:0;right:0;top:0;z-index:500;
+    display:flex;align-items:flex-start;justify-content:space-between;
+    padding:18px 22px;
+    background:linear-gradient(180deg, rgba(9,8,7,.96), rgba(9,8,7,.35), transparent);
+    pointer-events:none;
+  }
+
+  .brand{pointer-events:auto}
+  .brand .kicker{
+    font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:8px
+  }
+  .brand .title{
+    font-family:'Playfair Display',serif;font-size:26px;font-style:italic;color:var(--gold-2);line-height:1
+  }
+  .brand .sub{
+    margin-top:8px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)
+  }
+
+  .hud-actions{display:flex;gap:10px;pointer-events:auto;flex-wrap:wrap;justify-content:flex-end}
+  .btn{
+    border:1px solid var(--line);background:rgba(20,18,16,.92);color:var(--cream);
+    padding:9px 13px;border-radius:999px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    cursor:pointer;transition:.2s ease;backdrop-filter:blur(10px)
+  }
+  .btn:hover{border-color:var(--gold);color:var(--gold-2);transform:translateY(-1px)}
+
+  .legend{
+    position:fixed;left:22px;top:92px;z-index:520;
+    background:rgba(20,18,16,.85);border:1px solid var(--line);backdrop-filter:blur(10px);
+    border-radius:14px;padding:12px 14px;max-width:250px
+  }
+  .legend h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);margin:6px 0}
+  .swatch{width:10px;height:10px;border-radius:99px}
+  .swatch.gold{background:var(--gold)}
+  .swatch.blue{background:var(--blue)}
+  .swatch.green{background:var(--green)}
+  .swatch.red{background:var(--red)}
+
+  .hint{
+    position:fixed;left:22px;bottom:20px;z-index:520;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);
+    line-height:1.8
+  }
+
+  .panel{
+    position:fixed;right:22px;top:92px;z-index:520;width:min(360px, calc(100vw - 44px));
+    background:rgba(20,18,16,.9);border:1px solid var(--line);border-radius:18px;
+    padding:18px 18px 16px;backdrop-filter:blur(14px);box-shadow:0 24px 80px var(--shadow)
+  }
+  .panel .eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .panel .name{font-family:'Playfair Display',serif;font-size:28px;font-style:italic;color:var(--gold-2);line-height:1.05}
+  .panel .desc{margin-top:10px;color:#dcd3c2;font-size:13px;line-height:1.7}
+  .panel .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+  .stat{
+    background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    border:1px solid var(--line);border-radius:12px;padding:10px
+  }
+  .stat b{display:block;font-family:'Playfair Display',serif;font-size:20px;color:var(--gold-2);font-style:italic}
+  .stat span{display:block;margin-top:3px;font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .chip{
+    border:1px solid var(--line);background:rgba(255,255,255,.02);
+    padding:7px 10px;border-radius:999px;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted)
+  }
+
+  .minimap{
+    position:fixed;right:22px;bottom:22px;z-index:520;width:180px;height:120px;
+    background:rgba(20,18,16,.82);border:1px solid var(--line);border-radius:14px;
+    overflow:hidden;backdrop-filter:blur(10px)
+  }
+  .minimap .dot{
+    position:absolute;width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.7
+  }
+  .minimap .viewport{
+    position:absolute;border:1px solid var(--gold-2);border-radius:8px;opacity:.7
+  }
+
+  #canvas-root{
+    position:fixed;inset:0;z-index:2;overflow:hidden
+  }
+
+  #world{
+    position:absolute;left:0;top:0;width:4200px;height:2600px;
+    transform-origin:0 0;will-change:transform
+  }
+
+  #edges{
+    position:absolute;left:0;top:0;width:4200px;height:2600px;pointer-events:none;overflow:visible
+  }
+
+  .node{
+    position:absolute;user-select:none;transform:translate(-50%,-50%);cursor:pointer;
+    transition:transform .22s ease, filter .22s ease, opacity .22s ease, border-color .22s ease, box-shadow .22s ease;
+  }
+  .node:hover{filter:brightness(1.08)}
+  .node.dim{opacity:.24;filter:saturate(.4) blur(.1px)}
+  .node.active{transform:translate(-50%,-50%) scale(1.03);box-shadow:0 18px 50px rgba(0,0,0,.35)}
+  .node .topline{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .node .headline{font-family:'Syne',sans-serif;font-weight:800;line-height:1.02;letter-spacing:-.8px}
+  .node .body{margin-top:10px;font-size:11px;line-height:1.6;color:#d9cfbf}
+  .node .meta{margin-top:12px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+  .hero{
+    width:360px;padding:26px 26px 22px;border-radius:24px;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(210,176,116,.18), transparent 38%),
+      linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)),
+      rgba(20,18,16,.94);
+    border:1px solid rgba(210,176,116,.35);
+    box-shadow:0 0 0 1px rgba(210,176,116,.08), 0 24px 80px rgba(0,0,0,.5);
+  }
+  .hero .headline{font-size:44px;color:var(--cream)}
+  .hero .headline em{color:var(--gold-2);font-style:italic;font-family:'Playfair Display',serif}
+  .hero .body{font-size:13px;max-width:290px}
+
+  .hub{
+    width:230px;padding:20px;border-radius:22px;
+    background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)), rgba(20,18,16,.92);
+    border:1px solid var(--line-2);
+  }
+  .hub .headline{font-size:28px;color:var(--gold-2)}
+  .hub .body{font-size:12px}
+
+  .branch{
+    width:230px;padding:18px;border-radius:20px;
+    background:rgba(20,18,16,.92);border:1px solid var(--line);box-shadow:0 14px 44px rgba(0,0,0,.28)
+  }
+  .branch.photo{border-color:rgba(242,214,156,.28)}
+  .branch.video{border-color:rgba(239,127,95,.28)}
+  .branch.social{border-color:rgba(115,169,255,.28)}
+  .branch .headline{font-size:24px}
+
+  .case{
+    width:260px;padding:18px;border-radius:20px;
+    background:rgba(23,20,18,.96);border:1px solid var(--line)
+  }
+  .case .thumb{
+    height:116px;border-radius:14px;margin-bottom:14px;border:1px solid var(--line);
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.08), transparent 40%),
+      linear-gradient(160deg, rgba(210,176,116,.2), rgba(255,255,255,0)),
+      #201c17;
+    position:relative;overflow:hidden
+  }
+  .case .thumb::after{
+    content:"";position:absolute;inset:-30% -10%;
+    background:radial-gradient(circle, rgba(255,255,255,.15), transparent 55%);
+    transform:rotate(18deg)
+  }
+  .case .headline{font-size:20px}
+  .case .body{font-size:11px}
+
+  .metrics{
+    width:220px;padding:18px;border-radius:18px;background:rgba(20,18,16,.92);border:1px solid var(--line)
+  }
+  .metric-row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .metric{
+    background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:14px;padding:12px
+  }
+  .metric b{font-family:'Playfair Display',serif;font-size:24px;font-style:italic;color:var(--gold-2);display:block}
+  .metric span{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+  .quote{
+    width:260px;padding:18px;border-radius:18px;background:rgba(20,18,16,.92);border:1px solid var(--line)
+  }
+  .quote::before{
+    content:"“";position:absolute;top:-20px;right:10px;font-family:'Playfair Display',serif;font-size:100px;opacity:.1;color:var(--gold-2)
+  }
+  .quote .body{font-family:'Playfair Display',serif;font-style:italic;font-size:15px;line-height:1.7}
+  .quote .meta{margin-top:14px}
+
+  .cta{
+    width:290px;padding:22px;border-radius:24px;
+    background:linear-gradient(180deg, rgba(210,176,116,.16), rgba(255,255,255,.02)), rgba(20,18,16,.95);
+    border:1px solid rgba(210,176,116,.4)
+  }
+  .cta .headline{font-size:24px}
+  .cta .body{font-size:12px}
+
+  .edge{
+    fill:none;stroke:var(--line);stroke-width:2;stroke-linecap:round;stroke-dasharray:6 7;
+    opacity:.95
+  }
+  .edge.active{
+    stroke:var(--gold-2);
+    stroke-width:2.5;
+    filter:drop-shadow(0 0 8px rgba(210,176,116,.25));
+    animation:dash 1.5s linear infinite
+  }
+  .edge.soft{stroke:rgba(255,255,255,.08)}
+  @keyframes dash{to{stroke-dashoffset:-26}}
+
+  .node-marker{
+    position:absolute;right:14px;bottom:14px;width:28px;height:28px;border-radius:999px;
+    border:1px solid var(--line);display:grid;place-items:center;color:var(--gold-2);font-size:13px
+  }
+  .node:hover .node-marker{border-color:var(--gold)}
+  .hero .node-marker{border-color:rgba(210,176,116,.4)}
+  .active .node-marker{background:rgba(210,176,116,.08)}
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="spotlight" id="spotlight"></div>
+
+  <div class="hud">
+    <div class="brand">
+      <div class="kicker">Creative Studio</div>
+      <div class="title">Portfolio <span style="font-family:'Playfair Display',serif;font-style:italic;color:var(--gold-2)">Flowchart</span></div>
+      <div class="sub">A visual journey from identity → services → proof → contact</div>
+    </div>
+    <div class="hud-actions">
+      <button class="btn" onclick="fitToView()">Fit</button>
+      <button class="btn" onclick="resetFocus()">Reset</button>
+      <button class="btn" onclick="zoomBy(1.15)">Zoom In</button>
+      <button class="btn" onclick="zoomBy(0.85)">Zoom Out</button>
+    </div>
+  </div>
+
+  <div class="legend">
+    <h4>Legend</h4>
+    <div class="legend-item"><span class="swatch gold"></span> Main story path</div>
+    <div class="legend-item"><span class="swatch blue"></span> Social branch</div>
+    <div class="legend-item"><span class="swatch green"></span> Proof / metrics</div>
+    <div class="legend-item"><span class="swatch red"></span> Contact / CTA</div>
+  </div>
+
+  <div class="panel" id="panel">
+    <div class="eyebrow">Selected Node</div>
+    <div class="name" id="panelName">Blinx Lab</div>
+    <div class="desc" id="panelDesc">A cinematic canvas portfolio mapped as a single visual flow.</div>
+    <div class="stats" id="panelStats"></div>
+    <div class="chips" id="panelChips"></div>
+  </div>
+
+  <div class="hint">Drag to pan · Scroll to zoom · Click nodes to focus</div>
+
+  <div class="minimap" id="minimap"></div>
+
+  <div id="canvas-root">
+    <svg id="edges" viewBox="0 0 4200 2600" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div id="world"></div>
+  </div>
+
+<script>
+const WORLD = document.getElementById('world');
+const EDGES = document.getElementById('edges');
+const PANEL_NAME = document.getElementById('panelName');
+const PANEL_DESC = document.getElementById('panelDesc');
+const PANEL_STATS = document.getElementById('panelStats');
+const PANEL_CHIPS = document.getElementById('panelChips');
+const MINIMAP = document.getElementById('minimap');
+const SPOTLIGHT = document.getElementById('spotlight');
+
+let camX = 0, camY = 0, camZ = 1;
+let dragging = false, lastX = 0, lastY = 0;
+let activeId = 'hero';
+
+const NODES = [
+  { id:'hero', type:'hero', x:1500, y:1050, title:'Blinx Lab', subtitle:'Visual identity for premium clients', desc:'A portfolio designed as a living flowchart: clear story, strong hierarchy, cinematic composition.', stats:['Creative Direction','Motion Ready','Brand World'], chips:['Editorial','Strategy','Flowchart UX','Premium Visuals'], icon:'✦' },
+  { id:'hub', type:'hub', x:1910, y:1050, title:'Services Hub', subtitle:'One studio, multiple visual lanes', desc:'The portfolio branches from one central studio hub into three service paths.', stats:['3 Paths','1 Flow','100% Visual'], chips:['Photography','Video','Social'], icon:'⟶' },
+
+  { id:'photo', type:'branch photo', x:2300, y:820, title:'Photo', subtitle:'Editorial · Product · Brand', desc:'High-end image systems for campaigns, lookbooks, and product storytelling.', stats:['18 Shoots','240+ Frames','6 Brands'], chips:['Lighting','Art Direction','Retouching'], icon:'◐' },
+  { id:'video', type:'branch video', x:2300, y:1050, title:'Video', subtitle:'Reels · Films · Launches', desc:'Cinematic movement, sharp cuts, and polished narrative pacing.', stats:['14 Films','2.1M Views','9 Campaigns'], chips:['Motion','Reels','Campaign Films'], icon:'▶' },
+  { id:'social', type:'branch social', x:2300, y:1280, title:'Social', subtitle:'Content · Growth · Strategy', desc:'Content systems built for platform consistency and audience growth.', stats:['340% Lift','120 Posts','5 Channels'], chips:['Analytics','Calendars','Growth'], icon:'☰' },
+
+  { id:'photoCase', type:'case', x:2770, y:700, title:'Nova Fashion Case Study', subtitle:'Lookbook direction with editorial pacing', desc:'A premium visual sequence from moodboard to final assets.', stats:['32 Images','2 Days','1 Campaign'], chips:['Lookbook','Fashion','Storytelling'], icon:'◫' },
+  { id:'videoCase', type:'case', x:2770, y:1050, title:'Momentum Gym Campaign', subtitle:'Cinematic launch film + socials', desc:'Built to convert attention into brand recall and engagement.', stats:['8 Videos','45s Hero Film','2.4M Reach'], chips:['Launch','Ads','Reels'], icon:'◼' },
+  { id:'socialCase', type:'case', x:2770, y:1400, title:'Bloom Skincare System', subtitle:'Full content engine for growth', desc:'A structured content grid with performance-focused edits.', stats:['120 Posts','340% Growth','6 Months'], chips:['UGC','Scheduling','Conversion'], icon:'◍' },
+
+  { id:'proof', type:'metrics', x:3230, y:1050, title:'Proof of Impact', subtitle:'Numbers that back the visuals', desc:'Result-first portfolio proof, designed to be scanned instantly.', stats:['340%','Avg. Growth','Views'], chips:['Performance','ROI','Results'], icon:'▣' },
+  { id:'quote', type:'quote', x:3600, y:1050, title:'Client Feedback', subtitle:'Trust signals', desc:'“The portfolio feels like a brand journey, not a gallery. Every section makes sense instantly.”', stats:['5/5','Clients','Referrals'], chips:['Testimonial','Authority','Trust'], icon:'❝' },
+  { id:'contact', type:'cta', x:3930, y:1050, title:'Book the Next Story', subtitle:'Start the project', desc:'The final node in the flowchart: a clean, confident call to action.', stats:['Fast Reply','Flexible Scope','Clear Process'], chips:['Contact','Booking','Next Steps'], icon:'✉' }
+];
+
+const EDGES_DATA = [
+  ['hero','hub'],
+  ['hub','photo'], ['hub','video'], ['hub','social'],
+  ['photo','photoCase'], ['video','videoCase'], ['social','socialCase'],
+  ['photoCase','proof'], ['videoCase','proof'], ['socialCase','proof'],
+  ['proof','quote'], ['quote','contact']
+];
+
+const nodeMap = new Map();
+
+function el(tag, cls, html=''){
+  const n = document.createElement(tag);
+  if(cls) n.className = cls;
+  n.innerHTML = html;
+  return n;
+}
+
+function nodeClass(type){
+  if(type.includes('hero')) return 'node hero';
+  if(type.includes('hub')) return 'node hub';
+  if(type.includes('branch')) return 'node branch';
+  if(type.includes('case')) return 'node case';
+  if(type.includes('metrics')) return 'node metrics';
+  if(type.includes('quote')) return 'node quote';
+  if(type.includes('cta')) return 'node cta';
+  return 'node';
+}
+
+function renderNodes(){
+  WORLD.innerHTML = '';
+  nodeMap.clear();
+
+  for(const n of NODES){
+    const node = el('div', nodeClass(n.type), `
+      <div class="topline">${n.subtitle}</div>
+      <div class="headline">${n.title}</div>
+      <div class="body">${n.desc}</div>
+      <div class="meta">${n.type.replace(/^\w+\s*/,'').toUpperCase() || 'NODE'}</div>
+      <div class="node-marker">${n.icon}</div>
+    `);
+    node.style.left = n.x + 'px';
+    node.style.top = n.y + 'px';
+    if(n.type.includes('case')) {
+      const thumb = el('div', 'thumb');
+      node.insertBefore(thumb, node.children[1]);
+    }
+    if(n.type.includes('metrics')) {
+      const stats = el('div', 'metric-row');
+      stats.innerHTML = `
+        <div class="metric"><b>8+</b><span>Years of craft</span></div>
+        <div class="metric"><b>24/7</b><span>Visual systems</span></div>
+      `;
+      node.appendChild(stats);
+    }
+    node.addEventListener('click', (e) => {
+      e.stopPropagation();
+      focusNode(n.id);
+    });
+    WORLD.appendChild(node);
+    nodeMap.set(n.id, node);
+  }
+}
+
+function makeEdge(aId, bId, active=false){
+  const a = NODES.find(x => x.id === aId);
+  const b = NODES.find(x => x.id === bId);
+  const d = `M ${a.x} ${a.y} C ${(a.x+b.x)/2} ${a.y}, ${(a.x+b.x)/2} ${b.y}, ${b.x} ${b.y}`;
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', d);
+  path.setAttribute('class', `edge${active ? ' active' : ''}`);
+  EDGES.appendChild(path);
+}
+
+function renderEdges(activeTrail = new Set(['hero','hub','photo','video','social','photoCase','videoCase','socialCase','proof','quote','contact'])){
+  EDGES.innerHTML = '';
+  for(const [a,b] of EDGES_DATA){
+    const isActive = activeTrail.has(a) && activeTrail.has(b);
+    makeEdge(a,b,isActive);
+  }
+}
+
+function panelFor(id){
+  const n = NODES.find(x => x.id === id);
+  PANEL_NAME.textContent = n.title;
+  PANEL_DESC.textContent = n.desc;
+  PANEL_STATS.innerHTML = n.stats.map(s => `<div class="stat"><b>${s.split(' ')[0]}</b><span>${s.split(' ').slice(1).join(' ') || 'Metric'}</span></div>`).join('');
+  PANEL_CHIPS.innerHTML = n.chips.map(c => `<div class="chip">${c}</div>`).join('');
+}
+
+function setActive(id){
+  activeId = id;
+  const trail = {
+    hero:['hero'],
+    hub:['hero','hub'],
+    photo:['hero','hub','photo'],
+    video:['hero','hub','video'],
+    social:['hero','hub','social'],
+    photoCase:['hero','hub','photo','photoCase'],
+    videoCase:['hero','hub','video','videoCase'],
+    socialCase:['hero','hub','social','socialCase'],
+    proof:['hero','hub','photo','video','social','photoCase','videoCase','socialCase','proof'],
+    quote:['hero','hub','photo','video','social','photoCase','videoCase','socialCase','proof','quote'],
+    contact:['hero','hub','photo','video','social','photoCase','videoCase','socialCase','proof','quote','contact']
+  }[id] || ['hero'];
+
+  for(const [nid, node] of nodeMap.entries()){
+    node.classList.toggle('active', nid === id);
+    node.classList.toggle('dim', !trail.includes(nid));
+  }
+  renderEdges(new Set(trail));
+  panelFor(id);
+}
+
+function canvasToCenter(wx, wy){
+  return {
+    x: window.innerWidth / 2 - wx * camZ,
+    y: window.innerHeight / 2 - wy * camZ
+  };
+}
+
+function applyTransform(){
+  WORLD.style.transform = `translate(${camX}px, ${camY}px) scale(${camZ})`;
+  updateMinimap();
+}
+
+function focusNode(id){
+  const n = NODES.find(x => x.id === id);
+  const target = canvasToCenter(n.x, n.y);
+  const sx = camX, sy = camY, tx = target.x, ty = target.y, start = performance.now(), dur = 520;
+  function step(now){
+    const t = Math.min((now - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    camX = sx + (tx - sx) * ease;
+    camY = sy + (ty - sy) * ease;
+    camZ = id === 'hero' ? 1 : camZ;
+    applyTransform();
+    if(t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+  setActive(id);
+}
+
+function resetFocus(){
+  camX = -1350; camY = -770; camZ = 1;
+  applyTransform();
+  focusNode('hero');
+}
+
+function fitToView(){
+  camZ = 0.88;
+  camX = -1050;
+  camY = -520;
+  applyTransform();
+}
+
+function zoomBy(mult){
+  camZ = Math.max(.3, Math.min(1.8, camZ * mult));
+  applyTransform();
+}
+
+function updateMinimap(){
+  const scale = 0.035;
+  const vpW = window.innerWidth * scale / camZ;
+  const vpH = window.innerHeight * scale / camZ;
+  const vpX = (-camX * scale / camZ) + 20;
+  const vpY = (-camY * scale / camZ) + 14;
+
+  let vp = MINIMAP.querySelector('.viewport');
+  if(!vp){
+    vp = document.createElement('div');
+    vp.className = 'viewport';
+    MINIMAP.appendChild(vp);
+  }
+  vp.style.left = `${Math.max(0, vpX)}px`;
+  vp.style.top = `${Math.max(0, vpY)}px`;
+  vp.style.width = `${Math.min(MINIMAP.clientWidth, vpW)}px`;
+  vp.style.height = `${Math.min(MINIMAP.clientHeight, vpH)}px`;
+
+  // dots
+  if(!MINIMAP.querySelector('.dot')){
+    NODES.forEach(n => {
+      const d = document.createElement('div');
+      d.className = 'dot';
+      d.style.left = `${n.x * scale}px`;
+      d.style.top = `${n.y * scale}px`;
+      MINIMAP.appendChild(d);
+    });
+  }
+}
+
+WORLD.addEventListener('mousedown', (e) => {
+  if(e.target.closest('.node')) return;
+  dragging = true;
+  lastX = e.clientX;
+  lastY = e.clientY;
+  document.body.classList.add('dragging');
+});
+window.addEventListener('mousemove', (e) => {
+  document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+  document.documentElement.style.setProperty('--my', e.clientY + 'px');
+  if(!dragging) return;
+  camX += e.clientX - lastX;
+  camY += e.clientY - lastY;
+  lastX = e.clientX;
+  lastY = e.clientY;
+  applyTransform();
+});
+window.addEventListener('mouseup', () => {
+  dragging = false;
+  document.body.classList.remove('dragging');
+});
+WORLD.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const rect = WORLD.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  const z = e.deltaY > 0 ? 0.9 : 1.1;
+  camX = mx - (mx - camX) * z;
+  camY = my - (my - camY) * z;
+  camZ = Math.max(.3, Math.min(1.8, camZ * z));
+  applyTransform();
+}, { passive:false });
+
+window.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') resetFocus();
+});
+
+renderNodes();
+renderEdges();
+resetFocus();
+setActive('hero');
+window.addEventListener('resize', applyTransform);
+</script>
+</body>
+</html>
