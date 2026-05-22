@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="px-margin-desktop py-24 flex flex-col md:flex-row justify-between items-start gap-16 border-b-4 border-surface-variant">
         {/* Left Side: Massive Branding */}
         <div className="flex-1">
-          <Logo className="text-[80px] md:text-[130px] mb-4" />
+          <Logo className="text-[80px] md:text-[130px] mb-4 text-studio-white" />
           <p className="font-body-lg text-2xl font-bold max-w-md text-gray-400">
             High Velocity Creative. Designed to disrupt the algorithm and build cults.
           </p>

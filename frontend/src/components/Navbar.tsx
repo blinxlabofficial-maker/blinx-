@@ -34,7 +34,7 @@ export default function Navbar() {
           className="interactive font-headline-md text-[40px] font-black text-primary dark:text-primary tracking-tighter hover:text-white transition-colors duration-300 flex items-center"
           href="/"
         >
-          <Logo className="text-[40px] md:text-[50px]" />
+          <Logo className="text-[40px] md:text-[50px] text-studio-white" />
         </Link>
         <div className="flex gap-[24px]">
           <Link
