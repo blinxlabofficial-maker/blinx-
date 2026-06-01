@@ -1,0 +1,30 @@
+[
+  {
+    "id": "team-1",
+    "name": "J. D.",
+    "role": "Creative Director",
+    "specialty": "Visual Aggression",
+    "color": "bg-electric-red"
+  },
+  {
+    "id": "team-2",
+    "name": "A. K.",
+    "role": "Growth Architect",
+    "specialty": "Algorithm Exploitation",
+    "color": "bg-voltage-yellow"
+  },
+  {
+    "id": "team-3",
+    "name": "S. M.",
+    "role": "Lead Producer",
+    "specialty": "High-Velocity Output",
+    "color": "bg-studio-white"
+  },
+  {
+    "id": "team-4",
+    "name": "R. B.",
+    "role": "Copy Chief",
+    "specialty": "Weaponized Words",
+    "color": "bg-electric-red"
+  }
+]

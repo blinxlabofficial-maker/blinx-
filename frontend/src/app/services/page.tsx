@@ -1,8 +1,10 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Logo from "@/components/Logo";
+import { API_BASE_URL } from "@/lib/api";
 
 // MOCK MONGODB DATA
 const MOCK_SERVICES_DB = [
@@ -145,67 +147,90 @@ const MOCK_SERVICES_DB = [
 ];
 
 export default function ServicesPage() {
+  const [services, setServices] = useState(MOCK_SERVICES_DB);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/services`)
+      .then(res => {
+        if (!res.ok) throw new Error("API error");
+        return res.json();
+      })
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setServices(data);
+        }
+      })
+      .catch(() => {
+        // Fall back silently to mock DB if backend is offline
+      });
+  }, []);
+
   return (
     <main className="relative bg-ink-black text-studio-white min-h-screen">
       
       {/* 1. Hero Section */}
-      <section className="sticky top-[85px] h-[calc(100vh-85px)] z-0 flex flex-col justify-center items-center text-center p-8 bg-ink-black border-b-4 border-surface-variant overflow-hidden">
+      <section 
+          className="px-6 md:px-margin-desktop relative h-[calc(100vh-85px)] overflow-y-auto overflow-x-hidden w-full md:z-[40] flex flex-col items-center justify-start pt-8 md:pt-[20vh] pb-24 bg-studio-white text-ink-black border-b-4 border-electric-red md:overflow-hidden" 
+          id="services"
+          style={{ overscrollBehaviorY: 'contain', WebkitOverflowScrolling: 'touch' }}>
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+          className="max-w-2xl mx-auto flex flex-col items-center text-center"
         >
-          <h1 className="font-display-2xl text-[80px] md:text-[130px] leading-none uppercase text-studio-white mix-blend-difference z-10 relative">
+          <h1 className="font-display-2xl text-[64px] md:text-[130px] leading-none uppercase text-studio-white mix-blend-difference z-10 relative">
             Our <br/><span className="text-electric-red">Arsenal</span>
           </h1>
-          <p className="font-body-lg text-xl md:text-2xl mt-8 max-w-2xl mx-auto text-gray-400 font-bold">
+          <p className="font-body-lg text-lg md:text-2xl mt-6 md:mt-8 max-w-2xl mx-auto text-gray-400 font-bold">
             We don't do "best practices". We deploy brutal, high-impact strategies engineered to monopolize attention and force massive scale.
           </p>
         </motion.div>
       </section>
 
       {/* 3. Sticky Service Sections */}
-      {MOCK_SERVICES_DB.map((service, index) => (
+      {services.map((service, index) => (
         <section 
           key={service.id} 
-          className={`sticky top-[85px] h-[calc(100vh-85px)] z-${(index + 1) * 10} flex flex-col justify-center px-6 md:px-24 py-12 ${service.color} ${service.textColor} border-t-4 border-ink-black overflow-y-auto`}
+          className={`relative md:sticky top-[85px] h-[calc(100vh-85px)] flex flex-col justify-start md:justify-center px-6 md:px-24 ${service.color} ${service.textColor} border-t-4 border-ink-black overflow-y-auto md:overflow-hidden`}
+          style={{ zIndex: (index + 1) * 10, overscrollBehaviorY: 'contain', WebkitOverflowScrolling: 'touch' }}
         >
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center py-8 md:py-12">
             
             {/* Text & Details */}
             <div>
-              <div className="font-label-mono text-sm uppercase tracking-widest opacity-60 mb-6">
+              <div className="font-label-mono text-xs md:text-sm uppercase tracking-widest opacity-60 mb-4 md:mb-6">
                 Service 0{index + 1}
               </div>
-              <h2 className="font-display-2xl text-[60px] md:text-[90px] leading-none uppercase mb-6">
+              <h2 className="font-display-2xl text-[36px] md:text-[90px] leading-none uppercase mb-4 md:mb-6">
                 {service.title}
               </h2>
-              <h3 className="font-headline-md text-3xl uppercase opacity-80 mb-8">
+              <h3 className="font-headline-md text-lg md:text-3xl uppercase opacity-80 mb-6 md:mb-8">
                 {service.subtitle}
               </h3>
-              <p className="font-body-lg text-xl font-bold leading-relaxed opacity-90 max-w-xl">
+              <p className="font-body-lg text-sm md:text-xl font-bold leading-relaxed opacity-90 max-w-xl">
                 {service.description}
               </p>
 
               {/* Metrics */}
-              <div className="flex gap-12 mt-12 pt-8 border-t-4 border-current border-opacity-20">
+              <div className="flex gap-8 md:gap-12 mt-6 md:mt-12 pt-6 md:pt-8 border-t-4 border-current border-opacity-20">
                 {service.metrics.map(m => (
                   <div key={m.label} className="flex flex-col">
-                    <span className="font-display-2xl text-[40px] md:text-[60px] leading-none">{m.value}</span>
-                    <span className="font-label-mono text-xs uppercase tracking-widest mt-2 opacity-80">{m.label}</span>
+                    <span className="font-display-2xl text-[28px] md:text-[60px] leading-none">{m.value}</span>
+                    <span className="font-label-mono text-[10px] md:text-xs uppercase tracking-widest mt-2 opacity-80">{m.label}</span>
                   </div>
                 ))}
               </div>
               
-              <div className="mt-12">
-                 <Link href="/portfolio" className={`inline-block border-4 border-current px-8 py-4 font-headline-md text-2xl uppercase hover:bg-current ${service.textColor === 'text-ink-black' ? 'hover:text-studio-white' : 'hover:text-ink-black'} transition-colors`}>
+              <div className="mt-8 md:mt-12 pb-8 md:pb-0">
+                 <Link href="/portfolio" className={`inline-block border-4 border-current px-6 md:px-8 py-3 md:py-4 font-headline-md text-lg md:text-2xl uppercase hover:bg-current ${service.textColor === 'text-ink-black' ? 'hover:text-studio-white' : 'hover:text-ink-black'} transition-colors`}>
                    View Case Studies
                  </Link>
               </div>
             </div>
 
             {/* Media Placeholder Grid for MongoDB Assets */}
-            <div className="grid grid-cols-2 gap-4 h-[50vh] md:h-[70vh]">
+            <div className="hidden md:grid grid-cols-2 gap-4 h-[70vh]">
               <div className="border-4 border-current opacity-30 relative flex items-center justify-center p-4">
                 <span className="font-label-mono text-center uppercase text-sm">MongoDB Image/Video Asset 1</span>
               </div>

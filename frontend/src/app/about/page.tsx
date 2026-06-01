@@ -1,9 +1,10 @@
 "use client";
 
-
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Logo from "@/components/Logo";
+import { API_BASE_URL } from "@/lib/api";
 
 // MOCK MONGODB DATA FOR TEAM
 const MOCK_TEAM_DB = [
@@ -14,6 +15,23 @@ const MOCK_TEAM_DB = [
 ];
 
 export default function AboutPage() {
+  const [team, setTeam] = useState(MOCK_TEAM_DB);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/team`)
+      .then(res => {
+        if (!res.ok) throw new Error("API error");
+        return res.json();
+      })
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setTeam(data);
+        }
+      })
+      .catch(() => {
+        // Fall back silently to mock DB if backend offline
+      });
+  }, []);
 
   return (
     <main className="relative bg-ink-black text-studio-white min-h-screen selection:bg-electric-red selection:text-ink-black">
@@ -112,7 +130,7 @@ export default function AboutPage() {
           <h2 className="font-display-2xl text-[60px] md:text-[90px] leading-none uppercase mb-16 border-b-4 border-studio-white pb-4 text-voltage-yellow">The Hit Squad</h2>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {MOCK_TEAM_DB.map((member) => (
+            {team.map((member) => (
               <div key={member.id} className="relative aspect-[3/4] border-4 border-studio-white group overflow-hidden cursor-pointer">
                 {/* Image Placeholder */}
                 <div className="absolute inset-0 bg-surface-variant flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500">

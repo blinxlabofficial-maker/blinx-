@@ -3,60 +3,64 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
+// Section configurations aligned precisely to page.tsx HTML order and color contrasts
 const sections = [
-  { id: "hero", label: "Hero", color: "bg-electric-red" },
-  { id: "problem", label: "Problem", color: "bg-ink-black" },
-  { id: "value-prop", label: "Why Us", color: "bg-ink-black" },
+  { id: "hero", label: "Hero", color: "bg-voltage-yellow" },
+  { id: "problem", label: "Problem", color: "bg-electric-red" },
+  { id: "value-prop", label: "Why Us", color: "bg-voltage-yellow" },
   { id: "services", label: "Arsenal", color: "bg-electric-red" },
   { id: "process", label: "Process", color: "bg-ink-black" },
-  { id: "results", label: "Proof", color: "bg-voltage-yellow" },
-  { id: "work", label: "Work", color: "bg-electric-red" },
   { id: "testimonials", label: "Hit List", color: "bg-voltage-yellow" },
-  { id: "differentiator", label: "Cult", color: "bg-studio-white" },
-  { id: "cta", label: "CTA", color: "bg-ink-black" }
+  { id: "work", label: "Work", color: "bg-electric-red" },
+  { id: "differentiator", label: "Cult", color: "bg-voltage-yellow" },
+  { id: "cta", label: "CTA", color: "bg-voltage-yellow" }
 ];
 
 export default function DotNavigation() {
   const [activeId, setActiveId] = useState("hero");
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-      
-      // Find the active section by checking offsetTop
-      let currentActive = "hero";
-      for (const section of sections) {
-        const element = document.getElementById(section.id);
-        if (element) {
-          // offsetTop represents the original document flow position, even when sticky
-          if (scrollPosition >= element.offsetTop) {
-            currentActive = section.id;
-          }
-        }
-      }
-      setActiveId(currentActive);
+    // Configure IntersectionObserver to detect when a card occupies the center 20% band of viewport
+    const observerOptions = {
+      root: null, // viewport
+      rootMargin: "-40% 0px -40% 0px", // focus scanner box in viewport center
+      threshold: 0 // trigger as soon as section crosses the scan margin
     };
 
-    window.addEventListener("scroll", handleScroll);
-    // Initial check
-    handleScroll();
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id.replace("anchor-", "");
+          setActiveId(sectionId);
+        }
+      });
+    };
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Register active observer on every target anchor ID
+    sections.forEach((section) => {
+      const element = document.getElementById(`anchor-${section.id}`);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    const main = document.querySelector('main');
-    
+    const element = document.getElementById(`anchor-${id}`);
     if (element) {
-      // Calculate absolute position: the element's offset relative to main + main's offset from the top of the page.
-      // This perfectly accounts for the Navbar's height.
-      const mainOffset = main ? main.offsetTop : 0;
-      const targetScroll = mainOffset + element.offsetTop;
-
-      window.scrollTo({
-        top: targetScroll,
-        behavior: "auto" // Instantly and directly jumps to the section
+      // Instantly highlight clicked dot for immediate visual user feedback
+      setActiveId(id);
+      
+      // Leverage browser-native smooth snap-scroll transitions directly to start fold
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
       });
     }
   };
@@ -69,7 +73,7 @@ export default function DotNavigation() {
           <button
             key={section.id}
             onClick={() => scrollToSection(section.id)}
-            className="group relative flex items-center justify-center w-6 h-6 focus:outline-none"
+            className="group relative flex items-center justify-center w-6 h-6 focus:outline-none cursor-pointer"
             aria-label={`Scroll to ${section.label}`}
           >
             <motion.div 
@@ -81,8 +85,8 @@ export default function DotNavigation() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             />
             
-            {/* Tooltip */}
-            <div className={`absolute right-10 px-3 py-1 bg-ink-black text-studio-white font-label-mono text-xs uppercase tracking-widest whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 border-2 border-surface-variant pointer-events-none`}>
+            {/* Custom Brutalist Tooltip */}
+            <div className="absolute right-10 px-3 py-1 bg-ink-black text-studio-white font-label-mono text-xs uppercase tracking-widest whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 border-2 border-surface-variant pointer-events-none">
               {section.label}
             </div>
           </button>

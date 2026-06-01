@@ -1,0 +1,272 @@
+[
+  {
+    "id": "high-velocity-ads",
+    "title": "High-Velocity Ads",
+    "subtitle": "Performance creative that scales.",
+    "description": "We test fast, kill losers, and hyper-scale winners. Our performance creative is designed to exploit algorithms and drive massive ROAS. No vanity metrics, just pure bottom-line impact.",
+    "color": "bg-electric-red",
+    "textColor": "text-ink-black",
+    "metrics": [
+      {
+        "label": "Avg ROAS",
+        "value": "10x"
+      },
+      {
+        "label": "Creative Tests/Mo",
+        "value": "200+"
+      }
+    ]
+  },
+  {
+    "id": "content-engines",
+    "title": "Content Engines",
+    "subtitle": "Build a cult. Not an audience.",
+    "description": "Organic content strategies that build cult-like followings and massive brand equity. We engineer content pillars that generate compounding interest for your brand's attention economy.",
+    "color": "bg-ink-black",
+    "textColor": "text-studio-white",
+    "metrics": [
+      {
+        "label": "Viral Rate",
+        "value": "32%"
+      },
+      {
+        "label": "Organic Reach",
+        "value": "50M+"
+      }
+    ]
+  },
+  {
+    "id": "brand-identity",
+    "title": "Brand Identity",
+    "subtitle": "Designed for the scroll.",
+    "description": "Visual systems built to survive and dominate the digital feed. Bold, aggressive, and impossible to ignore. We don't do subtle; we do memorable.",
+    "color": "bg-voltage-yellow",
+    "textColor": "text-ink-black",
+    "metrics": [
+      {
+        "label": "Rebrands",
+        "value": "45"
+      },
+      {
+        "label": "Recall Lift",
+        "value": "85%"
+      }
+    ]
+  },
+  {
+    "id": "growth-strategy",
+    "title": "Growth Strategy",
+    "subtitle": "Hijack the algorithm.",
+    "description": "Data-driven roadmaps to hijack algorithms and force multiplicative growth. We identify the specific levers in your funnel that are bleeding cash and plug them with high-converting funnels.",
+    "color": "bg-studio-white",
+    "textColor": "text-ink-black",
+    "metrics": [
+      {
+        "label": "CPA Reduction",
+        "value": "-60%"
+      },
+      {
+        "label": "LTV Increase",
+        "value": "3x"
+      }
+    ]
+  },
+  {
+    "id": "social-media-management",
+    "title": "Social Media Management",
+    "subtitle": "Dominate the conversation.",
+    "description": "Full‑stack strategy, content creation, and community engagement that turns social platforms into profit generators.",
+    "color": "bg-electric-red",
+    "textColor": "text-ink-black",
+    "metrics": [
+      {
+        "label": "Engagement ↑",
+        "value": "200%"
+      },
+      {
+        "label": "Followers ↑",
+        "value": "5x"
+      }
+    ]
+  },
+  {
+    "id": "meta-ads",
+    "title": "Meta Ads",
+    "subtitle": "Unleash Facebook & Instagram power.",
+    "description": "High‑impact paid campaigns on Meta channels, optimized for ROAS and rapid scaling.",
+    "color": "bg-ink-black",
+    "textColor": "text-studio-white",
+    "metrics": [
+      {
+        "label": "Avg ROAS",
+        "value": "8x"
+      },
+      {
+        "label": "Monthly Budget",
+        "value": "$50K+"
+      }
+    ]
+  },
+  {
+    "id": "google-ads",
+    "title": "Google Ads",
+    "subtitle": "Capture high-intent searches.",
+    "description": "Laser‑targeted Search, Shopping, and YouTube campaigns capturing active buyers at the exact moment they want to buy.",
+    "color": "bg-voltage-yellow",
+    "textColor": "text-ink-black",
+    "metrics": [
+      {
+        "label": "Conversion Rate",
+        "value": "+25%"
+      },
+      {
+        "label": "Cost-per-Click ↓",
+        "value": "-35%"
+      }
+    ]
+  },
+  {
+    "id": "seo",
+    "title": "SEO",
+    "subtitle": "Organic search monopoly.",
+    "description": "Technical search engine optimization and aggressive backlinking that positions your brand at the absolute top of search results.",
+    "color": "bg-studio-white",
+    "textColor": "text-ink-black",
+    "metrics": [
+      {
+        "label": "Domain Authority",
+        "value": "+40"
+      },
+      {
+        "label": "Organic Traffic",
+        "value": "300%"
+      }
+    ]
+  },
+  {
+    "id": "aio",
+    "title": "AIO",
+    "subtitle": "Artificial Intelligence Optimization.",
+    "description": "Optimize your brand for search agents and AI tools like ChatGPT, Claude, and Gemini to ensure your brand is their top recommendation.",
+    "color": "bg-electric-red",
+    "textColor": "text-ink-black",
+    "metrics": [
+      {
+        "label": "AI Share of Voice",
+        "value": "+180%"
+      },
+      {
+        "label": "Query Rank",
+        "value": "#1"
+      }
+    ]
+  },
+  {
+    "id": "photo-shoots",
+    "title": "Photo Shoots",
+    "subtitle": "High-end commercial & editorial photography.",
+    "description": "Full production photography, including model casting, studio hire, set design, and elite high‑velocity retouching.",
+    "color": "bg-ink-black",
+    "textColor": "text-studio-white",
+    "metrics": [
+      {
+        "label": "Image Assets",
+        "value": "10K+"
+      },
+      {
+        "label": "Client Retainers",
+        "value": "15"
+      }
+    ]
+  },
+  {
+    "id": "video-shoots",
+    "title": "Video Shoots",
+    "subtitle": "Cinematic brand storytelling & ads.",
+    "description": "End‑to‑end commercial film shoots. We handle scripting, filming, directing, VFX, and post‑production cutdowns for all platforms.",
+    "color": "bg-voltage-yellow",
+    "textColor": "text-ink-black",
+    "metrics": [
+      {
+        "label": "Ad CTR",
+        "value": "5.5%"
+      },
+      {
+        "label": "Production Budget",
+        "value": "$250K"
+      }
+    ]
+  },
+  {
+    "id": "influencer-marketing",
+    "title": "Influencer Marketing",
+    "subtitle": "Weaponize creator relationships.",
+    "description": "Creator sourcing, negotiation, and high‑velocity campaign scaling. We construct custom influencer armies that spark massive trends.",
+    "color": "bg-studio-white",
+    "textColor": "text-ink-black",
+    "metrics": [
+      {
+        "label": "ROI",
+        "value": "6.2x"
+      },
+      {
+        "label": "Creator Network",
+        "value": "500+"
+      }
+    ]
+  },
+  {
+    "id": "web-dev",
+    "title": "Web Development",
+    "subtitle": "High performance brutalist sites.",
+    "description": "Ultra‑fast web development with custom interactive elements, React, Next.js, and state‑of‑the‑art performance metrics.",
+    "color": "bg-electric-red",
+    "textColor": "text-ink-black",
+    "metrics": [
+      {
+        "label": "Lighthouse Score",
+        "value": "99"
+      },
+      {
+        "label": "Load Time",
+        "value": "0.4s"
+      }
+    ]
+  },
+  {
+    "id": "app-dev",
+    "title": "App Development",
+    "subtitle": "Bespoke iOS & Android applications.",
+    "description": "Native and hybrid high‑velocity mobile app development. Designed for elite, smooth UI transitions and perfect retention.",
+    "color": "bg-ink-black",
+    "textColor": "text-studio-white",
+    "metrics": [
+      {
+        "label": "App Rating",
+        "value": "4.9"
+      },
+      {
+        "label": "Active Users",
+        "value": "1.2M+"
+      }
+    ]
+  },
+  {
+    "id": "editing",
+    "title": "High-Velocity Editing",
+    "subtitle": "VFX & retention-focused post production.",
+    "description": "Advanced post‑production focusing on high‑retention editing techniques, sound design, soundscapes, and intense custom animation.",
+    "color": "bg-voltage-yellow",
+    "textColor": "text-ink-black",
+    "metrics": [
+      {
+        "label": "Retention Rate",
+        "value": "78%"
+      },
+      {
+        "label": "Shorts Edited",
+        "value": "2.5K"
+      }
+    ]
+  }
+]

@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --ink-black: #090909;
+  --studio-white: #F7F5F0;
+  --electric-red: #FF003C;
+  --voltage-yellow: #FFD600;
+  --gray-medium: #1f1f1f;
+  --gray-light: #888888;
+  
+  font-family: 'Outfit', 'Arial', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--studio-white);
+  background-color: var(--ink-black);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--ink-black);
+  color: var(--studio-white);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: radial-gradient(rgba(247, 245, 240, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gray-medium);
+  border: 2px solid var(--ink-black);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--electric-red);
+}
+
+/* cyber-brutalist style variables & helpers */
+.font-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+.brutalist-border {
+  border: 3px solid var(--studio-white);
+}
+
+.brutalist-shadow-red {
+  box-shadow: 6px 6px 0px var(--electric-red);
+}
+
+.brutalist-shadow-yellow {
+  box-shadow: 6px 6px 0px var(--voltage-yellow);
+}
+
+.brutalist-shadow-white {
+  box-shadow: 6px 6px 0px var(--studio-white);
+}

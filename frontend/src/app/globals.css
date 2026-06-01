@@ -54,11 +54,11 @@
   --color-voltage-yellow: #FFD600;
   --color-ink-black: #1A1A1A;
 
-  --spacing-unit: 8px;
-  --spacing-margin-mobile: 24px;
-  --spacing-gutter: 24px;
-  --spacing-section-gap: 160px;
-  --spacing-margin-desktop: 80px;
+  --spacing-unit: 6.4px;
+  --spacing-margin-mobile: 19px;
+  --spacing-gutter: 19px;
+  --spacing-section-gap: 128px;
+  --spacing-margin-desktop: 64px;
 
   --font-body-md: "Hanken Grotesk", sans-serif;
   --font-label-mono: "JetBrains Mono", monospace;
@@ -70,7 +70,7 @@
 }
 
 html {
-  font-size: 90%;
+  font-size: 72%;
 }
 
 body {
@@ -168,3 +168,64 @@ body {
     0% { transform: translateX(0); }
     100% { transform: translateX(-100%); }
 }
+
+/* Fluid responsive typography clamps */
+.font-display-2xl {
+  font-size: clamp(2.4rem, 8vw, 6.4rem) !important;
+  line-height: 0.95 !important;
+}
+
+.font-headline-md {
+  font-size: clamp(1.2rem, 4.8vw, 2.8rem) !important;
+  line-height: 1.1 !important;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 8vw, 7.2rem);
+  line-height: 0.95;
+}
+h2 {
+  font-size: clamp(1.6rem, 5.6vw, 4.4rem);
+  line-height: 1.0;
+}
+h3 {
+  font-size: clamp(1.2rem, 4vw, 2.8rem);
+  line-height: 1.1;
+}
+
+/* Fluid responsive spacing tokens */
+:root {
+  --fluid-padding: clamp(1.2rem, 4vw, 4.8rem);
+}
+
+/* Root Scroll Snapping under modular snap-layout class */
+html.snap-layout {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.snap-anchor {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+html.snap-layout footer {
+  scroll-snap-align: end;
+  scroll-snap-stop: always;
+}
+
+/* Smooth margins and constraints for huge viewports */
+.max-width-desktop {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+

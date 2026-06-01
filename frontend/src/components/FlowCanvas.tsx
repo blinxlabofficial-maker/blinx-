@@ -2,8 +2,9 @@
 
 import { useState, useRef, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, animate } from "framer-motion";
 import Logo from "@/components/Logo";
+import { API_BASE_URL } from "@/lib/api";
 
 // -----------------------------------------------------
 // MONGODB-READY SCHEMA
@@ -75,9 +76,43 @@ export default function FlowCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   
+  const [db, setDb] = useState<FlowNode[]>(MOCK_DB);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/portfolio`)
+      .then(res => {
+        if (!res.ok) throw new Error("API error");
+        return res.json();
+      })
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setDb(data);
+        }
+      })
+      .catch(() => {
+        // Fall back silently to mock DB if backend offline
+      });
+  }, []);
+
   // State: which nodes have been "clicked" to expand their children
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set(["root"]));
   const [scale, setScale] = useState(1);
+
+  // Motion values for responsive draggable canvas coordinates
+  const canvasX = useMotionValue(100);
+  const canvasY = useMotionValue(0);
+
+  // Dynamically calculate mobile canvas dimensions and start scale zoom level
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      canvasY.set(window.innerHeight / 2 - 60);
+      if (window.innerWidth < 768) {
+        setScale(0.45); // Automatically zoom out on mobile viewports so nodes are visible
+      } else {
+        setScale(0.9);
+      }
+    }
+  }, []);
 
   // Handle Ctrl + Scroll for Zooming
   useEffect(() => {
@@ -109,10 +144,10 @@ export default function FlowCanvas() {
 
     // Recursive layout function
     const layoutTree = (nodeId: string, depth: number, startY: number): number => {
-      const nodeData = MOCK_DB.find(n => n.id === nodeId);
+      const nodeData = db.find(n => n.id === nodeId);
       if (!nodeData) return startY;
 
-      const children = MOCK_DB.filter(n => n.parentId === nodeId);
+      const children = db.filter(n => n.parentId === nodeId);
       const isExpanded = expandedIds.has(nodeId);
       
       let currentY = startY;
@@ -166,7 +201,7 @@ export default function FlowCanvas() {
     }
 
     return { nodes: positionedNodes, edges: calculatedEdges };
-  }, [expandedIds]);
+  }, [expandedIds, db]);
 
   const toggleExpand = (id: string) => {
     setExpandedIds(prev => {
@@ -175,7 +210,7 @@ export default function FlowCanvas() {
         // Optional: recursively collapse all descendants to keep state clean
         const collapseRecursive = (parentId: string) => {
           next.delete(parentId);
-          MOCK_DB.filter(n => n.parentId === parentId).forEach(c => collapseRecursive(c.id));
+          db.filter(n => n.parentId === parentId).forEach(c => collapseRecursive(c.id));
         };
         collapseRecursive(id);
       } else {
@@ -185,6 +220,14 @@ export default function FlowCanvas() {
     });
   };
 
+  const centerMap = () => {
+    const targetX = 100;
+    const targetY = typeof window !== "undefined" ? window.innerHeight / 2 - 60 : 0;
+    animate(canvasX, targetX, { type: "spring", stiffness: 200, damping: 25 });
+    animate(canvasY, targetY, { type: "spring", stiffness: 200, damping: 25 });
+    setScale(window.innerWidth < 768 ? 0.45 : 0.9);
+  };
+
   return (
     <div ref={containerRef} className="w-full h-full cursor-grab active:cursor-grabbing relative">
       {/* Infinite Draggable Canvas Layer */}
@@ -192,11 +235,10 @@ export default function FlowCanvas() {
         drag 
         dragConstraints={containerRef}
         dragElastic={0.2}
-        initial={{ x: 100, y: typeof window !== 'undefined' ? window.innerHeight / 2 - 60 : 0 }} // Start slightly offset so root is visible
         animate={{ scale }}
         transition={{ type: "spring", stiffness: 400, damping: 40 }}
         className="absolute w-[8000px] h-[8000px] left-[-4000px] top-[-4000px]"
-        style={{ originX: 0.5, originY: 0.5 }}
+        style={{ x: canvasX, y: canvasY, originX: 0.5, originY: 0.5 }}
       >
         {/* Origin container to center coordinates within the 8000x8000 canvas */}
         <div className="absolute left-[4000px] top-[4000px]">
@@ -221,10 +263,10 @@ export default function FlowCanvas() {
               );
             })}
           </svg>
-
+ 
           {/* HTML Nodes */}
           {nodes.map(node => {
-            const hasChildren = MOCK_DB.some(n => n.parentId === node.id);
+            const hasChildren = db.some(n => n.parentId === node.id);
             const isExpanded = expandedIds.has(node.id);
             
             // Map text colors based on background
@@ -300,6 +342,17 @@ export default function FlowCanvas() {
           })}
         </div>
       </motion.div>
+
+      {/* Floating Action Button to Center Map */}
+      <div className="absolute bottom-6 right-6 z-[30]">
+        <button
+          onClick={centerMap}
+          className="px-4 py-3 bg-voltage-yellow text-ink-black border-2 border-ink-black font-label-mono text-xs uppercase font-bold tracking-wider hover:bg-studio-white hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_#FF3C5A] active:translate-x-[0px] active:translate-y-[0px] active:shadow-none transition-all duration-150 flex items-center gap-2 cursor-pointer"
+        >
+          <span className="material-symbols-outlined text-sm font-bold">filter_center_focus</span>
+          Center Map
+        </button>
+      </div>
     </div>
   );
 }

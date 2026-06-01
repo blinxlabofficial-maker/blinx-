@@ -17,7 +17,21 @@ const MOCK_DB: FlowNode[] = [
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
-  const project = MOCK_DB.find(p => p.id === resolvedParams.id);
+  let project: any = null;
+
+  try {
+    const res = await fetch("http://localhost:5000/api/portfolio", { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      project = data.find((p: any) => p.id === resolvedParams.id);
+    }
+  } catch (e) {
+    // Fall back to mock DB if API offline
+  }
+
+  if (!project) {
+    project = MOCK_DB.find(p => p.id === resolvedParams.id);
+  }
   
   if (!project) {
     notFound();
@@ -48,7 +62,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
           {/* Metrics Bar */}
           {project.metrics && (
             <div className="flex gap-8 mt-12 pt-12 border-t-2 border-surface-variant">
-              {project.metrics.map(m => (
+              {project.metrics.map((m: any) => (
                 <div key={m.label} className="flex flex-col">
                   <span className="font-display-2xl text-[50px] text-voltage-yellow leading-none">{m.value}</span>
                   <span className="font-label-mono text-sm uppercase tracking-widest mt-2">{m.label}</span>
@@ -58,32 +72,64 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
           )}
         </div>
 
-        {/* Project Description Placeholder */}
+        {/* Project Description */}
         <div className="max-w-3xl mb-16">
           <h3 className="font-headline-md text-3xl uppercase text-electric-red mb-6">The Brief</h3>
-          <p className="font-body-lg text-lg text-gray-300 leading-relaxed">
-            This is a placeholder for the rich text description that will be loaded from your MongoDB backend. When you build your admin panel, you can inject full paragraphs detailing the creative process, the challenges faced, and how the studio executed the final deliverables.
+          <p className="font-body-lg text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+            {project.caseStudy?.description || "This is a placeholder for the rich text description that will be loaded from your MongoDB backend. When you build your admin panel, you can inject full paragraphs detailing the creative process, the challenges faced, and how the studio executed the final deliverables."}
           </p>
         </div>
 
-        {/* Dynamic MongoDB Content Placeholder Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
-          <div className="aspect-square bg-surface-variant border-2 border-ink-black relative group overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center font-label-mono text-gray-400 uppercase tracking-widest opacity-50">
-              MongoDB Image Asset 1
+        {/* Dynamic MongoDB Content / Media Grid */}
+        {project.caseStudy?.media && project.caseStudy.media.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+            {project.caseStudy.media.map((url: string, idx: number) => {
+              const isVideo = url.endsWith(".mp4") || url.includes("youtube.com") || url.includes("vimeo.com") || url.includes("video");
+              return (
+                <div 
+                  key={idx} 
+                  className={`border-2 border-ink-black relative group overflow-hidden bg-surface-variant ${
+                    idx === project.caseStudy.media.length - 1 && idx % 2 === 0 ? "md:col-span-2 aspect-video" : "aspect-square md:aspect-[4/3]"
+                  }`}
+                >
+                  {isVideo ? (
+                    <video 
+                      src={url} 
+                      controls 
+                      className="w-full h-full object-cover" 
+                      poster="/favicon.ico"
+                    />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img 
+                      src={url} 
+                      alt={`Case Study Media ${idx + 1}`} 
+                      className="w-full h-full object-cover" 
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+            <div className="aspect-square bg-surface-variant border-2 border-ink-black relative group overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center font-label-mono text-gray-400 uppercase tracking-widest opacity-50">
+                MongoDB Image Asset 1
+              </div>
+            </div>
+            <div className="aspect-[4/3] bg-surface-variant border-2 border-ink-black relative group overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center font-label-mono text-gray-400 uppercase tracking-widest opacity-50">
+                MongoDB Image Asset 2
+              </div>
+            </div>
+            <div className="aspect-video md:col-span-2 bg-surface-variant border-2 border-ink-black relative group overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center font-label-mono text-gray-400 uppercase tracking-widest opacity-50">
+                MongoDB Video Asset
+              </div>
             </div>
           </div>
-          <div className="aspect-[4/3] bg-surface-variant border-2 border-ink-black relative group overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center font-label-mono text-gray-400 uppercase tracking-widest opacity-50">
-              MongoDB Image Asset 2
-            </div>
-          </div>
-          <div className="aspect-video md:col-span-2 bg-surface-variant border-2 border-ink-black relative group overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center font-label-mono text-gray-400 uppercase tracking-widest opacity-50">
-              MongoDB Video Asset
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </main>
   );
