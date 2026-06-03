@@ -4,6 +4,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 import dotenv from "dotenv";
+import path from "path";
+import { logger } from "./config/logger";
 
 import { connectDatabase } from "./config/db";
 import { seedDatabase } from "./services/seeder";
@@ -82,6 +84,9 @@ const authLimiter = rateLimit({
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
+// Mount static uploads directory for local development fallback
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+
 // Request logging
 if (NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -105,9 +110,9 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Apply rate limiters to specific routes
+// Apply rate limiters to specific routes (strictly limit post submissions to prevent anti-spam, and auth limits to prevent brute-force)
 app.use("/api/auth", authLimiter);
-app.use("/api/leads", leadLimiter);
+app.post("/api/leads", leadLimiter);
 
 // API Routes (general limiter applied to all)
 app.use("/api", generalLimiter, apiRoutes);
@@ -143,16 +148,20 @@ async function startServer() {
       await seedDatabase();
     }
   } catch (err) {
-    console.warn("⚠ Seeding skipped (MongoDB not available)");
+    logger.warn("⚠ Seeding skipped (MongoDB not available)");
   }
 
-  app.listen(PORT, () => {
-    console.log(`\n⚡ Blinx_ Lab API v2.0.0`);
-    console.log(`  → Environment: ${NODE_ENV}`);
-    console.log(`  → Port: ${PORT}`);
-    console.log(`  → CORS Origins: ${corsOrigins.join(", ")}`);
-    console.log(`  → Health: http://localhost:${PORT}/api/health\n`);
-  });
+  if (process.env.NODE_ENV !== "test") {
+    app.listen(PORT, () => {
+      logger.info(`⚡ Blinx_ Lab API v2.0.0 is running`);
+      logger.info(`  → Environment: ${NODE_ENV}`);
+      logger.info(`  → Port: ${PORT}`);
+      logger.info(`  → CORS Origins: ${corsOrigins.join(", ")}`);
+      logger.info(`  → Health: http://localhost:${PORT}/api/health`);
+    });
+  }
 }
 
 startServer();
+
+export { app };

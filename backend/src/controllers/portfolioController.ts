@@ -1,14 +1,27 @@
 import { Request, Response } from "express";
 import { dbService } from "../services/local_db";
+import { logger } from "../config/logger";
 
 /**
  * GET /api/portfolio — Public
+ * Query parameters: category
  */
 export async function getAll(req: Request, res: Response): Promise<void> {
   try {
-    const nodes = await dbService.getPortfolio();
+    const category = req.query.category as string || "";
+    let nodes = await dbService.getPortfolio();
+    
+    if (category) {
+      const lowerCat = category.toLowerCase();
+      nodes = nodes.filter((n: any) => 
+        (n.category && n.category.toLowerCase() === lowerCat) ||
+        (n.type && n.type.toLowerCase() === lowerCat)
+      );
+    }
+
     res.json(nodes);
   } catch (error: any) {
+    logger.error(`Error in getAll portfolio: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 }

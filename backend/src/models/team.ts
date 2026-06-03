@@ -6,6 +6,7 @@ const TeamMemberSchema = new Schema({
   role: { type: String, required: true },
   specialty: { type: String, required: true },
   color: { type: String, default: "bg-electric-red" },
+  photo: { type: String, default: "" },
 });
 
 export const TeamMember = mongoose.models.TeamMember || mongoose.model("TeamMember", TeamMemberSchema);

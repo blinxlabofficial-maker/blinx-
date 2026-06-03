@@ -189,14 +189,67 @@ export const dbService = {
     }
   },
 
-  // Leads operations
-  async getLeads() {
+  async getLeads(options?: { page?: number; limit?: number; search?: string }) {
+    const page = options?.page || 1;
+    const limit = options?.limit || 10;
+    const search = options?.search || "";
+
+    const skip = (page - 1) * limit;
+
     if (isMongoConnected()) {
-      return await Lead.find({}).sort({ createdAt: -1 });
+      const query: any = {};
+      if (search) {
+        query.$or = [
+          { name: { $regex: search, $options: "i" } },
+          { email: { $regex: search, $options: "i" } },
+          { brand: { $regex: search, $options: "i" } },
+          { message: { $regex: search, $options: "i" } }
+        ];
+      }
+
+      const totalLeads = await Lead.countDocuments(query);
+      const data = await Lead.find(query)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
+
+      return {
+        data,
+        pagination: {
+          page,
+          limit,
+          totalLeads,
+          totalPages: Math.ceil(totalLeads / limit)
+        }
+      };
     } else {
-      return readJSON("leads", []).sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      let data = readJSON("leads", []).sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      
+      if (search) {
+        const lowerSearch = search.toLowerCase();
+        data = data.filter((item: any) => 
+          (item.name && item.name.toLowerCase().includes(lowerSearch)) ||
+          (item.email && item.email.toLowerCase().includes(lowerSearch)) ||
+          (item.brand && item.brand.toLowerCase().includes(lowerSearch)) ||
+          (item.message && item.message.toLowerCase().includes(lowerSearch))
+        );
+      }
+
+      const totalLeads = data.length;
+      const paginatedData = data.slice(skip, skip + limit);
+
+      return {
+        data: paginatedData,
+        pagination: {
+          page,
+          limit,
+          totalLeads,
+          totalPages: Math.ceil(totalLeads / limit)
+        }
+      };
     }
   },
+
   async createLead(data: any) {
     const leadData = {
       ...data,

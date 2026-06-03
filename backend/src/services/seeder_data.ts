@@ -137,10 +137,10 @@ export const DEFAULT_SERVICES = [
 ];
 
 export const DEFAULT_TEAM = [
-  { id: "team-1", name: "J. D.", role: "Creative Director", specialty: "Visual Aggression", color: "bg-electric-red" },
-  { id: "team-2", name: "A. K.", role: "Growth Architect", specialty: "Algorithm Exploitation", color: "bg-voltage-yellow" },
-  { id: "team-3", name: "S. M.", role: "Lead Producer", specialty: "High-Velocity Output", color: "bg-studio-white" },
-  { id: "team-4", name: "R. B.", role: "Copy Chief", specialty: "Weaponized Words", color: "bg-electric-red" }
+  { id: "team-1", name: "J. D.", role: "Creative Director", specialty: "Visual Aggression", color: "bg-electric-red", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" },
+  { id: "team-2", name: "A. K.", role: "Growth Architect", specialty: "Algorithm Exploitation", color: "bg-voltage-yellow", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" },
+  { id: "team-3", name: "S. M.", role: "Lead Producer", specialty: "High-Velocity Output", color: "bg-studio-white", photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" },
+  { id: "team-4", name: "R. B.", role: "Copy Chief", specialty: "Weaponized Words", color: "bg-electric-red", photo: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=600&q=80" }
 ];
 
 export const DEFAULT_PORTFOLIO = [

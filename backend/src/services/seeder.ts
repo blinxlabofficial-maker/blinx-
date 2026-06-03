@@ -6,7 +6,7 @@ import { DEFAULT_SERVICES, DEFAULT_TEAM, DEFAULT_PORTFOLIO } from "./seeder_data
 
 export async function seedDatabase() {
   try {
-    // Seed admin user from env
+    // Seed admin user from env (keep if exists to avoid resetting custom admin passwords)
     const adminCount = await Admin.countDocuments({});
     if (adminCount === 0) {
       const adminEmail = process.env.ADMIN_EMAIL || "admin@blinxlab.com";
@@ -20,26 +20,18 @@ export async function seedDatabase() {
       console.log(`✓ Admin user seeded: ${adminEmail}`);
     }
 
-    // Seed services
-    const servicesCount = await Service.countDocuments({});
-    if (servicesCount === 0) {
-      await Service.insertMany(DEFAULT_SERVICES);
-      console.log("✓ Default Services seeded successfully!");
-    }
+    // Always re-seed services, team, and portfolio to keep them synced with latest definitions
+    await Service.deleteMany({});
+    await Service.insertMany(DEFAULT_SERVICES);
+    console.log("✓ Default Services seeded successfully!");
 
-    // Seed team
-    const teamCount = await TeamMember.countDocuments({});
-    if (teamCount === 0) {
-      await TeamMember.insertMany(DEFAULT_TEAM);
-      console.log("✓ Default Team Members seeded successfully!");
-    }
+    await TeamMember.deleteMany({});
+    await TeamMember.insertMany(DEFAULT_TEAM);
+    console.log("✓ Default Team Members seeded successfully!");
 
-    // Seed portfolio
-    const portfolioCount = await FlowNode.countDocuments({});
-    if (portfolioCount === 0) {
-      await FlowNode.insertMany(DEFAULT_PORTFOLIO);
-      console.log("✓ Default Portfolio Map Nodes seeded successfully!");
-    }
+    await FlowNode.deleteMany({});
+    await FlowNode.insertMany(DEFAULT_PORTFOLIO);
+    console.log("✓ Default Portfolio Map Nodes seeded successfully!");
   } catch (error) {
     console.error("✗ Seeding database failed:", error);
   }

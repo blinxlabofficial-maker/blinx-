@@ -8,10 +8,10 @@ import { API_BASE_URL } from "@/lib/api";
 
 // MOCK MONGODB DATA FOR TEAM
 const MOCK_TEAM_DB = [
-  { id: "team-1", name: "J. D.", role: "Creative Director", specialty: "Visual Aggression", color: "bg-electric-red" },
-  { id: "team-2", name: "A. K.", role: "Growth Architect", specialty: "Algorithm Exploitation", color: "bg-voltage-yellow" },
-  { id: "team-3", name: "S. M.", role: "Lead Producer", specialty: "High-Velocity Output", color: "bg-studio-white" },
-  { id: "team-4", name: "R. B.", role: "Copy Chief", specialty: "Weaponized Words", color: "bg-electric-red" },
+  { id: "team-1", name: "J. D.", role: "Creative Director", specialty: "Visual Aggression", color: "bg-electric-red", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" },
+  { id: "team-2", name: "A. K.", role: "Growth Architect", specialty: "Algorithm Exploitation", color: "bg-voltage-yellow", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" },
+  { id: "team-3", name: "S. M.", role: "Lead Producer", specialty: "High-Velocity Output", color: "bg-studio-white", photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" },
+  { id: "team-4", name: "R. B.", role: "Copy Chief", specialty: "Weaponized Words", color: "bg-electric-red", photo: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=600&q=80" },
 ];
 
 export default function AboutPage() {
@@ -132,10 +132,18 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {team.map((member) => (
               <div key={member.id} className="relative aspect-[3/4] border-4 border-studio-white group overflow-hidden cursor-pointer">
-                {/* Image Placeholder */}
-                <div className="absolute inset-0 bg-surface-variant flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500">
-                   <span className="font-label-mono text-xs uppercase text-gray-500 tracking-widest text-center px-4">MongoDB<br/>Image Asset</span>
-                </div>
+                {/* Background Photo */}
+                {member.photo ? (
+                  <img
+                    src={member.photo}
+                    alt={member.name}
+                    className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-surface-variant flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <span className="font-label-mono text-xs uppercase text-gray-500 tracking-widest text-center px-4">MongoDB<br/>Image Asset</span>
+                  </div>
+                )}
                 
                 {/* Hover Reveal Card */}
                 <motion.div 

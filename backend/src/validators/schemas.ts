@@ -51,7 +51,8 @@ export const createTeamSchema = z.object({
   name: z.string().min(1, "Name is required").max(100),
   role: z.string().min(1, "Role is required").max(100),
   specialty: z.string().min(1, "Specialty is required").max(100),
-  color: colorEnum.default("bg-electric-red")
+  color: colorEnum.default("bg-electric-red"),
+  photo: z.string().optional()
 });
 
 export const updateTeamSchema = createTeamSchema.partial().omit({ id: true });

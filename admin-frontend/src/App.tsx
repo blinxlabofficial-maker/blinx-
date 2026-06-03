@@ -25,6 +25,7 @@ interface TeamMemberItem {
   role: string;
   specialty: string;
   color: string;
+  photo?: string;
 }
 
 interface FlowNodeItem {
@@ -147,7 +148,8 @@ export default function App() {
     name: "",
     role: "",
     specialty: "",
-    color: "bg-electric-red"
+    color: "bg-electric-red",
+    photo: ""
   });
 
   // Toast auto-dismiss
@@ -175,7 +177,12 @@ export default function App() {
       setServices(Array.isArray(resServices) ? resServices : []);
       setPortfolio(Array.isArray(resPortfolio) ? resPortfolio : []);
       setTeam(Array.isArray(resTeam) ? resTeam : []);
-      setLeads(Array.isArray(resLeads) ? resLeads : []);
+      
+      if (resLeads && typeof resLeads === "object" && "data" in resLeads && Array.isArray(resLeads.data)) {
+        setLeads(resLeads.data);
+      } else {
+        setLeads(Array.isArray(resLeads) ? resLeads : []);
+      }
     } catch (error) {
       showToast("Backend Server Offline. Make sure backend runs on port 5000.", "error");
     } finally {
@@ -247,7 +254,8 @@ export default function App() {
         name: "",
         role: "",
         specialty: "",
-        color: "bg-electric-red"
+        color: "bg-electric-red",
+        photo: ""
       });
     }
     setModalOpen(true);
@@ -268,7 +276,10 @@ export default function App() {
         caseStudy: item.caseStudy || { description: "", media: [] }
       });
     } else if (type === "team") {
-      setTeamForm(item);
+      setTeamForm({
+        ...item,
+        photo: item.photo || ""
+      });
     }
     setModalOpen(true);
   };
@@ -484,7 +495,7 @@ export default function App() {
   // RENDER: MAIN DASHBOARD
   // ==========================================
   return (
-    <div className="dashboard-container">
+    <>
       {/* Toast Alert */}
       {toast && (
         <div className={`alert-toast ${toast.type === "error" ? "error" : ""}`}>
@@ -492,6 +503,8 @@ export default function App() {
           <span>{toast.message}</span>
         </div>
       )}
+
+      <div className="dashboard-container">
 
       {/* Sidebar Panel */}
       <aside className="sidebar">
@@ -1249,6 +1262,17 @@ export default function App() {
                       <option value="bg-studio-white">Studio White (Clean)</option>
                     </select>
                   </div>
+
+                  <div className="form-group" style={{ marginTop: "1rem" }}>
+                    <label className="form-label">Background Photo URL</label>
+                    <input
+                      type="text"
+                      className="form-input"
+                      value={teamForm.photo || ""}
+                      onChange={e => setTeamForm({ ...teamForm, photo: e.target.value })}
+                      placeholder="e.g. https://images.unsplash.com/... or /public folder path"
+                    />
+                  </div>
                 </div>
               )}
 
@@ -1270,5 +1294,6 @@ export default function App() {
         </div>
       )}
     </div>
+    </>
   );
 }

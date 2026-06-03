@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { upload } from "../config/s3";
+import { upload, getFolder } from "../config/s3";
 
 /**
  * POST /api/upload — Protected
- * Upload single file to S3.
+ * Upload single file. Fallbacks to local disk if S3 is not configured.
  */
 export function uploadSingle(req: Request, res: Response): void {
   const multerUpload = upload.single("file");
@@ -26,21 +26,30 @@ export function uploadSingle(req: Request, res: Response): void {
       return;
     }
 
-    const file = req.file as Express.MulterS3.File;
+    const file = req.file;
+    const isLocal = !("location" in file);
+
+    const folder = getFolder(req);
+    const url = isLocal
+      ? `http://localhost:${process.env.PORT || 5000}/uploads/${folder}/${file.filename}`
+      : (file as any).location;
+    const key = isLocal
+      ? `${folder}/${file.filename}`
+      : (file as any).key;
 
     res.json({
       message: "File uploaded successfully.",
-      url: file.location,
-      key: file.key,
+      url,
+      key,
       size: file.size,
-      contentType: file.contentType
+      contentType: file.mimetype
     });
   });
 }
 
 /**
  * POST /api/upload/multiple — Protected
- * Upload multiple files to S3 (max 10).
+ * Upload multiple files (max 10). Fallbacks to local disk if S3 is not configured.
  */
 export function uploadMultiple(req: Request, res: Response): void {
   const multerUpload = upload.array("files", 10);
@@ -63,16 +72,27 @@ export function uploadMultiple(req: Request, res: Response): void {
       return;
     }
 
-    const files = (req.files as Express.MulterS3.File[]).map(file => ({
-      url: file.location,
-      key: file.key,
-      size: file.size,
-      contentType: file.contentType
-    }));
+    const folder = getFolder(req);
+    const filesList = (req.files as Express.Multer.File[]).map(file => {
+      const isLocal = !("location" in file);
+      const url = isLocal
+        ? `http://localhost:${process.env.PORT || 5000}/uploads/${folder}/${file.filename}`
+        : (file as any).location;
+      const key = isLocal
+        ? `${folder}/${file.filename}`
+        : (file as any).key;
+
+      return {
+        url,
+        key,
+        size: file.size,
+        contentType: file.mimetype
+      };
+    });
 
     res.json({
-      message: `${files.length} file(s) uploaded successfully.`,
-      files
+      message: `${filesList.length} file(s) uploaded successfully.`,
+      files: filesList
     });
   });
 }

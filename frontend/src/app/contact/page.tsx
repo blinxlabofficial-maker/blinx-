@@ -104,99 +104,110 @@ export default function ContactPage() {
             </button>
           </motion.div>
         ) : (
-          <form className="w-full max-w-2xl mx-auto flex flex-col gap-8" onSubmit={handleSubmit}>
-            
-            {error && (
-              <div className="border-4 border-electric-red bg-electric-red bg-opacity-20 p-4 font-label-mono text-sm uppercase tracking-widest text-electric-red font-bold text-center">
-                ⚠ {error}
-              </div>
-            )}
-
-            <div className="group">
-              <label className="font-label-mono text-sm uppercase tracking-widest block mb-2 opacity-60 group-focus-within:opacity-100 group-focus-within:text-electric-red transition-colors">
-                Agent Identity (Name) *
-              </label>
-              <input 
-                type="text" 
-                required
-                value={form.name}
-                onChange={e => setForm({ ...form, name: e.target.value })}
-                className="w-full bg-transparent border-b-4 border-ink-black py-4 font-headline-md text-3xl uppercase outline-none focus:border-electric-red focus:bg-electric-red focus:bg-opacity-10 transition-all placeholder:text-gray-400"
-                placeholder="John Doe"
-              />
+          <div className="w-full max-w-2xl mx-auto flex flex-col gap-6">
+            <div className="border-b-4 border-ink-black pb-4 mb-2">
+              <h2 className="font-display-2xl text-[45px] md:text-[55px] leading-none uppercase mb-2 text-ink-black">
+                Transmit Signal
+              </h2>
+              <p className="font-label-mono text-sm uppercase tracking-widest text-gray-600">
+                Establish core connection vector
+              </p>
             </div>
 
-            <div className="group">
-              <label className="font-label-mono text-sm uppercase tracking-widest block mb-2 opacity-60 group-focus-within:opacity-100 group-focus-within:text-electric-red transition-colors">
-                Transmission Vector (Email) *
-              </label>
-              <input 
-                type="email" 
-                required
-                value={form.email}
-                onChange={e => setForm({ ...form, email: e.target.value })}
-                className="w-full bg-transparent border-b-4 border-ink-black py-4 font-headline-md text-3xl uppercase outline-none focus:border-electric-red focus:bg-electric-red focus:bg-opacity-10 transition-all placeholder:text-gray-400"
-                placeholder="john@brand.com"
-              />
-            </div>
+            <form className="w-full flex flex-col gap-8" onSubmit={handleSubmit}>
+              
+              {error && (
+                <div className="border-4 border-electric-red bg-electric-red bg-opacity-20 p-4 font-label-mono text-sm uppercase tracking-widest text-electric-red font-bold text-center">
+                  ⚠ {error}
+                </div>
+              )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="group">
-                <label className="font-label-mono text-sm uppercase tracking-widest block mb-2 opacity-60 group-focus-within:opacity-100 group-focus-within:text-electric-red transition-colors">
-                  Brand Designation *
+                <label className="font-label-mono text-sm uppercase tracking-widest block mb-2 text-ink-black opacity-60 group-focus-within:opacity-100 group-focus-within:text-electric-red transition-colors">
+                  Agent Identity (Name) *
                 </label>
                 <input 
                   type="text" 
                   required
-                  value={form.brand}
-                  onChange={e => setForm({ ...form, brand: e.target.value })}
-                  className="w-full bg-transparent border-b-4 border-ink-black py-4 font-headline-md text-2xl uppercase outline-none focus:border-electric-red focus:bg-electric-red focus:bg-opacity-10 transition-all placeholder:text-gray-400"
-                  placeholder="Acme Corp"
+                  value={form.name}
+                  onChange={e => setForm({ ...form, name: e.target.value })}
+                  className="w-full bg-transparent border-b-4 border-ink-black py-4 font-headline-md text-3xl uppercase outline-none text-ink-black focus:border-electric-red focus:bg-electric-red focus:bg-opacity-10 transition-all placeholder:text-gray-400"
+                  placeholder="John Doe"
                 />
               </div>
-              
+
               <div className="group">
-                <label className="font-label-mono text-sm uppercase tracking-widest block mb-2 opacity-60 group-focus-within:opacity-100 group-focus-within:text-electric-red transition-colors">
-                  Monthly Ammo (Budget) *
+                <label className="font-label-mono text-sm uppercase tracking-widest block mb-2 text-ink-black opacity-60 group-focus-within:opacity-100 group-focus-within:text-electric-red transition-colors">
+                  Transmission Vector (Email) *
                 </label>
-                <select 
-                  value={form.budget}
-                  onChange={e => setForm({ ...form, budget: e.target.value })}
-                  className="w-full bg-transparent border-b-4 border-ink-black py-4 font-headline-md text-2xl uppercase outline-none focus:border-electric-red focus:bg-electric-red focus:bg-opacity-10 transition-all cursor-pointer appearance-none"
-                >
-                  <option value="10k">Under $10K</option>
-                  <option value="50k">$10K - $50K</option>
-                  <option value="100k">$50K - $100K</option>
-                  <option value="max">$100K+</option>
-                </select>
+                <input 
+                  type="email" 
+                  required
+                  value={form.email}
+                  onChange={e => setForm({ ...form, email: e.target.value })}
+                  className="w-full bg-transparent border-b-4 border-ink-black py-4 font-headline-md text-3xl uppercase outline-none text-ink-black focus:border-electric-red focus:bg-electric-red focus:bg-opacity-10 transition-all placeholder:text-gray-400"
+                  placeholder="john@brand.com"
+                />
               </div>
-            </div>
 
-            <div className="group">
-              <label className="font-label-mono text-sm uppercase tracking-widest block mb-2 opacity-60 group-focus-within:opacity-100 group-focus-within:text-electric-red transition-colors">
-                The Objective *
-              </label>
-              <textarea 
-                rows={4}
-                required
-                value={form.message}
-                onChange={e => setForm({ ...form, message: e.target.value })}
-                className="w-full bg-transparent border-b-4 border-ink-black py-4 font-body-lg text-xl outline-none focus:border-electric-red focus:bg-electric-red focus:bg-opacity-10 transition-all placeholder:text-gray-400 resize-none"
-                placeholder="Tell us what's broken and how fast you want to scale..."
-              ></textarea>
-            </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="group">
+                  <label className="font-label-mono text-sm uppercase tracking-widest block mb-2 text-ink-black opacity-60 group-focus-within:opacity-100 group-focus-within:text-electric-red transition-colors">
+                    Brand Designation *
+                  </label>
+                  <input 
+                    type="text" 
+                    required
+                    value={form.brand}
+                    onChange={e => setForm({ ...form, brand: e.target.value })}
+                    className="w-full bg-transparent border-b-4 border-ink-black py-4 font-headline-md text-2xl uppercase outline-none text-ink-black focus:border-electric-red focus:bg-electric-red focus:bg-opacity-10 transition-all placeholder:text-gray-400"
+                    placeholder="Acme Corp"
+                  />
+                </div>
+                
+                <div className="group">
+                  <label className="font-label-mono text-sm uppercase tracking-widest block mb-2 text-ink-black opacity-60 group-focus-within:opacity-100 group-focus-within:text-electric-red transition-colors">
+                    Monthly Ammo (Budget) *
+                  </label>
+                  <select 
+                    value={form.budget}
+                    onChange={e => setForm({ ...form, budget: e.target.value })}
+                    className="w-full bg-transparent border-b-4 border-ink-black py-4 font-headline-md text-2xl uppercase outline-none text-ink-black focus:border-electric-red focus:bg-electric-red focus:bg-opacity-10 transition-all cursor-pointer appearance-none"
+                  >
+                    <option value="10k" className="text-ink-black bg-studio-white">Under $10K</option>
+                    <option value="50k" className="text-ink-black bg-studio-white">$10K - $50K</option>
+                    <option value="100k" className="text-ink-black bg-studio-white">$50K - $100K</option>
+                    <option value="max" className="text-ink-black bg-studio-white">$100K+</option>
+                  </select>
+                </div>
+              </div>
 
-            <motion.button 
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              disabled={loading}
-              type="submit"
-              className="mt-8 btn-primary interactive font-headline-md text-headline-md text-3xl md:text-5xl uppercase px-12 py-8 border-4 border-ink-black w-full bg-ink-black text-studio-white hover:bg-electric-red hover:text-ink-black transition-colors"
-            >
-              {loading ? "TRANSMITTING..." : "Transmit Signal"}
-            </motion.button>
-            
-          </form>
+              <div className="group">
+                <label className="font-label-mono text-sm uppercase tracking-widest block mb-2 text-ink-black opacity-60 group-focus-within:opacity-100 group-focus-within:text-electric-red transition-colors">
+                  The Objective *
+                </label>
+                <textarea 
+                  rows={4}
+                  required
+                  value={form.message}
+                  onChange={e => setForm({ ...form, message: e.target.value })}
+                  className="w-full bg-transparent border-b-4 border-ink-black py-4 font-body-lg text-xl outline-none text-ink-black focus:border-electric-red focus:bg-electric-red focus:bg-opacity-10 transition-all placeholder:text-gray-400 resize-none"
+                  placeholder="Tell us what's broken and how fast you want to scale..."
+                ></textarea>
+              </div>
+
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                disabled={loading}
+                type="submit"
+                className="mt-8 btn-primary interactive font-headline-md text-headline-md text-3xl md:text-5xl uppercase px-12 py-8 border-4 border-ink-black w-full bg-ink-black text-studio-white hover:bg-electric-red hover:text-ink-black transition-colors"
+              >
+                {loading ? "TRANSMITTING..." : "Transmit Signal"}
+              </motion.button>
+              
+            </form>
+          </div>
         )}
       </div>
     </main>

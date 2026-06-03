@@ -250,5 +250,19 @@
       "description": "Crowdsourced video campaign exploiting organic reels sharing loops to drive audience growth.",
       "media": []
     }
+  },
+  {
+    "id": "Akshay Rana",
+    "parentId": "srv-social",
+    "type": "work",
+    "title": "Music Promotions",
+    "subtitle": "Music artist ",
+    "color": "bg-ink-black",
+    "chips": [],
+    "metrics": [],
+    "caseStudy": {
+      "description": "asdfabf sa f",
+      "media": []
+    }
   }
 ]
