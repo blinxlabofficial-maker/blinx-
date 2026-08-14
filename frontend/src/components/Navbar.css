@@ -1,0 +1,302 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.25rem 0;
+  transition: all 0.3s ease;
+  background-color: transparent;
+}
+
+.navbar.scrolled {
+  padding: 0.75rem 0;
+  background-color: rgba(247, 245, 240, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-light, #E5E5E5);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0,0,0,0.05));
+}
+
+.navbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-desktop {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  font-family: var(--font-body);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 500;
+  color: var(--ink-muted, #666666);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+  padding: 0.5rem 0;
+}
+
+.nav-link:hover, .nav-link:focus-visible {
+  color: var(--ink-black, #1A1A1A);
+  outline: none;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--electric-red, #FF3C5A);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after, .nav-link:focus-visible::after {
+  width: 100%;
+}
+
+.nav-cta {
+  padding: 0.5rem 1rem;
+  font-size: var(--text-sm, 0.875rem);
+}
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 22px;
+  height: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+}
+
+.nav-hamburger:focus-visible {
+  outline: 2px solid var(--electric-red, #FF3C5A);
+  outline-offset: 4px;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: var(--ink-black, #1A1A1A);
+  transition: all 0.3s ease;
+  transform-origin: left center;
+}
+
+.nav-hamburger.open span:nth-child(1) {
+  transform: rotate(45deg);
+  background-color: var(--studio-white, #F7F5F0);
+}
+
+.nav-hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg);
+  background-color: var(--studio-white, #F7F5F0);
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--ink-black, #1A1A1A);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
+}
+
+.mobile-nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: center;
+}
+
+.mobile-nav-link {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--studio-white, #F7F5F0);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.mobile-nav-link:hover, .mobile-nav-link:focus-visible {
+  color: var(--electric-red, #FF3C5A);
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .nav-desktop {
+    display: none;
+  }
+  
+  .nav-cta {
+    display: none;
+  }
+  
+  .nav-hamburger {
+    display: flex;
+  }
+}
+
+/* === Desktop Dropdown === */
+.nav-item-dropdown {
+  position: relative;
+  list-style: none;
+}
+
+.dropdown-trigger {
+  cursor: pointer;
+  user-select: none;
+  display: inline-block;
+  padding: 0.5rem 0;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--studio-white);
+  border: 1px solid var(--border-medium);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 220px;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 1000;
+  margin-top: 0.25rem;
+}
+
+.nav-item-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-menu button {
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem var(--space-md);
+  background: transparent;
+  border: none;
+  color: var(--ink-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  white-space: nowrap;
+}
+
+.dropdown-menu button:hover,
+.dropdown-menu button:focus-visible {
+  color: var(--electric-red);
+  background: var(--studio-white-dim);
+  outline: none;
+}
+
+/* === Mobile Submenu === */
+.mobile-subheader {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--voltage-yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.mobile-sublink {
+  background: transparent;
+  border: none;
+  color: var(--studio-white-dim);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 0.25rem 0;
+}
+
+.mobile-sublink:hover,
+.mobile-sublink:focus-visible {
+  color: var(--electric-red);
+  outline: none;
+}
+
+/* Adjust mobile layout height to fit submenu scroll */
+.mobile-menu {
+  overflow-y: auto;
+  padding: 4rem 1rem 2rem 1rem;
+  align-items: flex-start;
+}
+.mobile-nav-links {
+  gap: 1.25rem;
+  width: 100%;
+}
+
+/* === Navbar on Dark Section Variant (Service Hero) === */
+.navbar.on-dark .nav-link {
+  color: rgba(247, 245, 240, 0.7);
+}
+
+.navbar.on-dark .nav-link:hover,
+.navbar.on-dark .nav-link:focus-visible {
+  color: var(--studio-white);
+}
+
+.navbar.on-dark .dropdown-trigger {
+  color: rgba(247, 245, 240, 0.7);
+}
+
+.navbar.on-dark .dropdown-trigger:hover {
+  color: var(--studio-white);
+}
+
+.navbar.on-dark .nav-hamburger span {
+  background-color: var(--studio-white);
+}
+
+

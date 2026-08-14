@@ -1,0 +1,218 @@
+.growth-audit {
+  padding: var(--space-section) 0;
+  background: var(--studio-white-dim, #EDEAE3);
+}
+
+.growth-audit-inner {
+  max-width: 720px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.audit-label {
+  font-family: var(--font-mono);
+  color: var(--electric-red);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-size: var(--text-sm);
+  display: block;
+  margin-bottom: var(--space-sm);
+}
+
+.audit-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  margin: var(--space-md) 0;
+  color: var(--ink-black);
+}
+
+.audit-copy {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  color: var(--ink-muted);
+  margin-bottom: var(--space-xl);
+}
+
+.audit-quiz {
+  background: var(--studio-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  box-shadow: var(--shadow-md);
+  text-align: left;
+}
+
+.audit-progress {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: var(--space-xl);
+}
+
+.audit-progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-medium);
+  transition: background 0.3s ease;
+}
+
+.audit-progress-dot.active {
+  background: var(--electric-red);
+}
+
+.audit-progress-dot.completed {
+  background: var(--electric-red);
+}
+
+.audit-question {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  margin-bottom: var(--space-lg);
+  color: var(--ink-black);
+}
+
+.audit-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.audit-option {
+  padding: var(--space-md);
+  border: 1.5px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--duration-fast);
+  text-align: left;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--ink-black);
+}
+
+.audit-option:hover {
+  border-color: var(--ink-black);
+  background: var(--electric-red-subtle);
+}
+
+.audit-option.selected {
+  border-color: var(--electric-red);
+  background: var(--electric-red-subtle);
+}
+
+.audit-select {
+  width: 100%;
+  padding: var(--space-md);
+  border: 1.5px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  background: var(--studio-white);
+  color: var(--ink-black);
+}
+
+.audit-select:focus {
+  outline: none;
+  border-color: var(--ink-black);
+}
+
+.audit-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-xl);
+  align-items: center;
+}
+
+.audit-back {
+  background: none;
+  border: none;
+  color: var(--ink-muted);
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  padding: var(--space-sm) var(--space-md);
+  transition: color var(--duration-fast);
+}
+
+.audit-back:hover, .audit-back:focus-visible {
+  color: var(--ink-black);
+  outline: none;
+  text-decoration: underline;
+}
+
+.audit-results {
+  padding: var(--space-xl) 0;
+}
+
+.audit-result-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-lg);
+  text-align: left;
+  margin: var(--space-xl) 0;
+}
+
+.audit-result-card {
+  background: var(--studio-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.audit-result-icon {
+  color: var(--electric-red);
+  margin-bottom: var(--space-sm);
+}
+
+.audit-result-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-sm);
+  color: var(--ink-black);
+}
+
+.audit-result-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+
+.audit-step-content {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.audit-results-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+@media (max-width: 768px) {
+  .audit-result-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .audit-quiz {
+    padding: var(--space-xl);
+  }
+}

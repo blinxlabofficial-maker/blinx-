@@ -1,0 +1,25 @@
+{
+  "name": "blinxlab",
+  "version": "1.0.0",
+  "description": "A polished, responsive, and performance-focused website for **Blinx Lab**, a digital marketing and web development agency that helps small businesses build an online presence, get discovered, and stay relevant.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blinxlabofficial-maker/blinxlab-main.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/blinxlabofficial-maker/blinxlab-main/issues"
+  },
+  "homepage": "https://github.com/blinxlabofficial-maker/blinxlab-main#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
