@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { getRecommendations } from '@/data/auditQuestions';
-import { getMongoClient } from '@/lib/mongodb';
 
 export async function POST(request: Request) {
   try {
@@ -11,50 +10,44 @@ export async function POST(request: Request) {
       return NextResponse.json({ detail: 'Answers must be an array of 5 items' }, { status: 400 });
     }
 
-    if (!name || typeof name !== 'string') {
-      return NextResponse.json({ detail: 'Name is required' }, { status: 400 });
-    }
-
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ detail: 'Valid email is required' }, { status: 400 });
-    }
-
-    if (!business_name || typeof business_name !== 'string') {
-      return NextResponse.json({ detail: 'Business name is required' }, { status: 400 });
-    }
-
     const recommendations = getRecommendations(answers);
-    const id = crypto.randomUUID();
-    const created_at = new Date().toISOString();
+    const formattedDate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
 
-    console.log('New Growth Audit Submission:', { id, created_at, name, email, business_name, answers });
+    // Optional Google Sheets forward for Growth Audit submissions
+    const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL || process.env.GOOGLE_SHEET_URL;
+    if (webhookUrl && email) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 6000);
 
-    try {
-      const client = await getMongoClient();
-      if (client) {
-        const db = client.db('blinx_lab');
-        await db.collection('growth_audits').insertOne({
-          id,
-          created_at,
-          name,
-          email,
-          business_name,
-          answers,
-          recommendations
+        await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            timestamp: formattedDate,
+            name: name || 'Audit User',
+            email: email || '',
+            phone: 'N/A',
+            business_name: business_name || '',
+            help_type: 'Growth Audit Submission',
+            description: `Audit Answers: ${answers.join(', ')}`
+          }),
+          signal: controller.signal,
+          redirect: 'follow',
         });
+        clearTimeout(timeoutId);
+      } catch (err) {
+        console.warn('Audit Google Sheets forward failed:', err);
       }
-    } catch (dbError) {
-      console.error('MongoDB Error:', dbError);
     }
 
     return NextResponse.json({
-      id,
-      created_at,
+      success: true,
       recommendations
-    }, { status: 201 });
+    }, { status: 200 });
 
   } catch (error) {
     console.error('Error processing growth audit:', error);
-    return NextResponse.json({ detail: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ detail: 'Error processing audit' }, { status: 500 });
   }
 }
