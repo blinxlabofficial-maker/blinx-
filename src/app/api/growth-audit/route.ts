@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getRecommendations } from '@/data/auditQuestions';
-import clientPromise from '@/lib/mongodb';
+import { getMongoClient } from '@/lib/mongodb';
 
 export async function POST(request: Request) {
   try {
@@ -30,17 +30,19 @@ export async function POST(request: Request) {
     console.log('New Growth Audit Submission:', { id, created_at, name, email, business_name, answers });
 
     try {
-      const client = await clientPromise;
-      const db = client.db('blinx_lab');
-      await db.collection('growth_audits').insertOne({
-        id,
-        created_at,
-        name,
-        email,
-        business_name,
-        answers,
-        recommendations
-      });
+      const client = await getMongoClient();
+      if (client) {
+        const db = client.db('blinx_lab');
+        await db.collection('growth_audits').insertOne({
+          id,
+          created_at,
+          name,
+          email,
+          business_name,
+          answers,
+          recommendations
+        });
+      }
     } catch (dbError) {
       console.error('MongoDB Error:', dbError);
     }

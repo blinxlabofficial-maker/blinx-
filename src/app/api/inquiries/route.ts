@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
-import clientPromise from '@/lib/mongodb';
+import { getMongoClient } from '@/lib/mongodb';
 
 export async function POST(request: Request) {
   try {
@@ -82,11 +82,13 @@ export async function POST(request: Request) {
 
     // --- FALLBACK LAYER 2: MongoDB Storage ---
     try {
-      const client = await clientPromise;
-      const db = client.db('blinx_lab');
-      await db.collection('inquiries').insertOne(inquiry);
-      savedToMongo = true;
-      console.log('✅ Successfully saved to MongoDB');
+      const client = await getMongoClient();
+      if (client) {
+        const db = client.db('blinx_lab');
+        await db.collection('inquiries').insertOne(inquiry);
+        savedToMongo = true;
+        console.log('✅ Successfully saved to MongoDB');
+      }
     } catch (dbError) {
       console.warn('⚠️ MongoDB connection unavailable, using file fallback');
     }

@@ -1,6 +1,5 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
-const uri = process.env.MONGODB_URI;
 const options = {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -9,9 +8,18 @@ const options = {
   },
 };
 
-let clientPromise: Promise<MongoClient>;
+let cachedPromise: Promise<MongoClient> | null = null;
 
-if (uri) {
+export async function getMongoClient(): Promise<MongoClient | null> {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    return null;
+  }
+
+  if (cachedPromise) {
+    return cachedPromise;
+  }
+
   if (process.env.NODE_ENV === 'development') {
     const globalWithMongo = global as typeof globalThis & {
       _mongoClientPromise?: Promise<MongoClient>;
@@ -21,14 +29,27 @@ if (uri) {
       const client = new MongoClient(uri, options);
       globalWithMongo._mongoClientPromise = client.connect();
     }
-    clientPromise = globalWithMongo._mongoClientPromise;
+    cachedPromise = globalWithMongo._mongoClientPromise;
   } else {
     const client = new MongoClient(uri, options);
-    clientPromise = client.connect();
+    cachedPromise = client.connect();
   }
-} else {
-  // Safe fallback if MONGODB_URI is not defined
-  clientPromise = Promise.reject(new Error('Missing environment variable: "MONGODB_URI"'));
+
+  return cachedPromise;
 }
+
+const clientPromise = {
+  then<TResult1 = MongoClient, TResult2 = never>(
+    onfulfilled?: ((value: MongoClient) => TResult1 | PromiseLike<TResult1>) | null,
+    onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
+  ) {
+    return getMongoClient().then((client) => {
+      if (!client) {
+        throw new Error('Missing environment variable: "MONGODB_URI"');
+      }
+      return client;
+    }).then(onfulfilled, onrejected);
+  }
+};
 
 export default clientPromise;
