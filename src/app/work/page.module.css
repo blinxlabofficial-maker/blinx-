@@ -8,7 +8,7 @@
 .heroSection {
   position: relative;
   text-align: center;
-  margin-bottom: 4.5rem;
+  margin-bottom: var(--section-gap-md);
   padding: 3rem 0 2rem;
   overflow: hidden;
   border-radius: var(--radius-2xl);
@@ -166,7 +166,7 @@
 }
 
 .statTickerNumber {
-  font-family: var(--font-syne);
+  font-family: var(--font-headline);
   font-size: 1.6rem;
   font-weight: 800;
   color: var(--ink-black);
@@ -207,7 +207,7 @@
 .sectionHeaderWrapper {
   text-align: center;
   max-width: 780px;
-  margin: 6rem auto 3.5rem;
+  margin: var(--section-gap-md) auto 3.5rem;
 }
 
 .sectionTag {
@@ -242,7 +242,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
-  margin-bottom: 6rem;
+  margin-bottom: var(--section-gap-md);
 }
 
 .capabilityCard {
@@ -293,7 +293,7 @@
 
 .caseStudiesSection {
   width: 100%;
-  margin-bottom: 6rem;
+  margin-bottom: var(--section-gap-md);
 }
 
 .grid {
@@ -302,7 +302,7 @@
   gap: 2.5rem;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
   }

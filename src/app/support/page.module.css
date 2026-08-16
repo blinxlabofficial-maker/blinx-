@@ -13,7 +13,7 @@
 .heroSection {
   position: relative;
   text-align: center;
-  margin-bottom: 4.5rem;
+  margin-bottom: var(--section-gap-sm);
   padding: 4rem 1.5rem 3.5rem;
   overflow: hidden;
   border-radius: var(--radius-2xl);
@@ -175,7 +175,7 @@
 
 /* 2. Direct Channels Grid */
 .channelsSection {
-  margin-bottom: 5.5rem;
+  margin-bottom: var(--section-gap-md);
 }
 
 .channelGrid {
@@ -267,7 +267,7 @@
 
 /* 3. Main Grid Section: Ticket Form & FAQ */
 .mainGridSection {
-  margin-bottom: 5rem;
+  margin-bottom: var(--section-gap-md);
 }
 
 .twoColumnLayout {
@@ -519,7 +519,7 @@
 }
 
 /* Responsive */
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .twoColumnLayout {
     grid-template-columns: 1fr;
     gap: 3rem;

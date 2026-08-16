@@ -13,7 +13,7 @@
 .heroSection {
   position: relative;
   text-align: center;
-  margin-bottom: 5rem;
+  margin-bottom: var(--section-gap-sm);
   padding: 4rem 1.5rem 3.5rem;
   overflow: hidden;
   border-radius: var(--radius-2xl);
@@ -86,7 +86,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.45rem 1.15rem;
+  padding: 0.4rem 1.15rem;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -152,7 +152,7 @@
 }
 
 .statNumber {
-  font-family: var(--font-syne);
+  font-family: var(--font-headline);
   font-size: 1.85rem;
   font-weight: 800;
   color: var(--electric-red);
@@ -180,7 +180,7 @@
 
 /* 2. Mission Section */
 .missionSection {
-  margin-bottom: 6rem;
+  margin-bottom: var(--section-gap-md);
 }
 
 .missionGrid {
@@ -316,7 +316,7 @@
 
 /* 3. Principles Section */
 .principlesSection {
-  margin-bottom: 6rem;
+  margin-bottom: var(--section-gap-md);
 }
 
 .sectionHeaderCenter {
@@ -495,18 +495,6 @@
   }
 }
 
-@media (max-width: 860px) {
-  .missionGrid {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-
-  .statsRow {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-}
-
 @media (max-width: 768px) {
   .pageContainer {
     padding: 5rem var(--section-pad-x) 3rem;
@@ -515,6 +503,16 @@
   .heroSection {
     margin-bottom: 3rem;
     padding: 3rem 1.25rem 2.5rem;
+  }
+
+  .missionGrid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .statsRow {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 
   .principlesGrid {

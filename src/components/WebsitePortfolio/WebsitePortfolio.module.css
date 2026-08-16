@@ -290,7 +290,7 @@
 }
 
 .metricValue {
-  font-family: var(--font-syne);
+  font-family: var(--font-headline);
   font-size: 1.15rem;
   font-weight: 800;
   color: var(--electric-red);

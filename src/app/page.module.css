@@ -21,12 +21,12 @@
   max-width: var(--container-narrow);
 }
 
-.darkBg {
+.sectionDark {
   background-color: var(--studio-white);
   color: var(--ink-black);
 }
 
-.lightBg {
+.sectionLight {
   background-color: #FFFFFF;
   color: var(--ink-black);
 }
@@ -88,7 +88,7 @@
    2. THE PROBLEM SECTION
    ============================================ */
 .problemSection {
-  padding: 7rem 0;
+  padding-block: var(--section-gap-md);
   text-align: center;
 }
 
@@ -561,7 +561,7 @@
    10. FINAL CTA BANNER (Studio Light Glass)
    ============================================ */
 .finalCta {
-  padding: 8rem 0;
+  padding-block: var(--section-gap-lg);
   text-align: center;
 }
 
@@ -640,11 +640,11 @@
 
 @media (max-width: 768px) {
   .section {
-    padding-block: 4.5rem;
+    padding-block: var(--section-gap-sm);
   }
 
   .problemSection {
-    padding: 4rem 0;
+    padding-block: var(--section-gap-sm);
   }
 
   .valueSection {
@@ -652,7 +652,7 @@
   }
 
   .finalCta {
-    padding: 4.5rem 0;
+    padding-block: var(--section-gap-sm);
   }
 
   .valueItem {

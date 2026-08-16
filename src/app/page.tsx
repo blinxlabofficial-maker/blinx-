@@ -30,7 +30,7 @@ export default function Home() {
       </div>
 
       {/* 2. The Problem (Studio Light / Editorial) */}
-      <section className={`${styles.section} ${styles.lightBg} ${styles.problemSection}`}>
+      <section className={`${styles.section} ${styles.sectionLight} ${styles.problemSection}`}>
         <div className={`${styles.container} ${styles.narrowContainer}`}>
           <SectionReveal>
             <span className={styles.categoryTagDark}>THE CORE DILEMMA</span>
@@ -55,18 +55,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Inter-Section Transition: Light Problem to Dark Flywheel */}
+      {/* 3. Flywheel Section (Studio Light Operating Model) */}
+      <FlywheelSection />
+
+      {/* Inter-Section Transition: Light Flywheel to Dark Value Strip */}
       <div className={styles.transitionLightToDark} aria-hidden="true">
         <svg viewBox="0 0 1440 80" fill="none" preserveAspectRatio="none" className={styles.transitionSvg}>
           <path d="M0,0 C480,80 960,80 1440,0 L1440,80 L0,80 Z" fill="var(--surface-dark)" />
         </svg>
       </div>
 
-      {/* 3. Flywheel Section (Dark / Scrollytelling) */}
-      <FlywheelSection />
-
       {/* 4. Value / Impact Strip (Dark) */}
-      <section className={`${styles.section} ${styles.darkBg} ${styles.valueSection}`}>
+      <section className={`${styles.section} ${styles.sectionDark} ${styles.valueSection}`}>
         <div className={styles.container}>
           <div className={styles.valueGrid}>
             <SectionReveal staggerIndex={0}>
@@ -115,7 +115,7 @@ export default function Home() {
       </div>
 
       {/* 6. Who We Help (Dark / Audience) */}
-      <section className={`${styles.section} ${styles.darkBg}`}>
+      <section className={`${styles.section} ${styles.sectionDark}`}>
         <div className={styles.container}>
           <div className={styles.sectionHeaderCenter}>
             <SectionReveal>
@@ -172,7 +172,7 @@ export default function Home() {
       </div>
 
       {/* 7. Why Blinx (Studio Light / Positioning) */}
-      <section id="why-blinx" className={`${styles.section} ${styles.lightBg}`}>
+      <section id="why-blinx" className={`${styles.section} ${styles.sectionLight}`}>
         <div className={styles.container}>
           <div className={styles.whyGrid}>
             <div className={styles.whyContent}>
@@ -231,7 +231,7 @@ export default function Home() {
       </div>
 
       {/* 9. Testimonials (Studio Light) */}
-      <section className={`${styles.section} ${styles.lightBg}`}>
+      <section className={`${styles.section} ${styles.sectionLight}`}>
         <div className={styles.container}>
           <div className={styles.sectionHeaderCenter}>
             <SectionReveal>
@@ -251,7 +251,7 @@ export default function Home() {
       </div>
 
       {/* 10. Final CTA Banner (Dark / Luxury) */}
-      <section className={`${styles.section} ${styles.darkBg} ${styles.finalCta}`}>
+      <section className={`${styles.section} ${styles.sectionDark} ${styles.finalCta}`}>
         <Blob position="top-left" variant="primary" opacity={0.4} />
         <div className={styles.container}>
           <SectionReveal>

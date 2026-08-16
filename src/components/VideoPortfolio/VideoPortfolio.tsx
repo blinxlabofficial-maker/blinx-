@@ -2,45 +2,27 @@
 
 import React, { useState, useMemo, useRef, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
 import { 
   Play, 
-  Pause, 
-  Volume2, 
-  VolumeX, 
-  Maximize2, 
-  X, 
   Search, 
-  ArrowRight, 
-  CheckCircle2, 
-  Sparkles,
-  ChevronLeft,
-  ChevronRight,
-  TrendingUp,
-  Film,
-  Eye,
-  Flame,
-  Sparkle
+  X, 
+  Flame 
 } from 'lucide-react';
-import { useContactModal } from '@/context/ContactModalContext';
 import { 
   videoProjectsData, 
-  videoPortfolioCategories, 
-  VideoProject 
+  videoPortfolioCategories 
 } from '@/data/videoPortfolio';
+import ReelViewer from '../ReelViewer/ReelViewer';
 import styles from './VideoPortfolio.module.css';
 
 function VideoPortfolioInner() {
-  const { openContactModal } = useContactModal();
   const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeModalProject, setActiveModalProject] = useState<VideoProject | null>(null);
-  const [modalMuted, setModalMuted] = useState(false);
+  const [activeReelIndex, setActiveReelIndex] = useState<number | null>(null);
   const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
 
   const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
-  const modalVideoRef = useRef<HTMLVideoElement | null>(null);
 
   // Sync category with URL search params
   useEffect(() => {
@@ -70,7 +52,7 @@ function VideoPortfolioInner() {
     });
   }, [selectedCategory, searchQuery]);
 
-  // Handle video card mouse enter / leave preview
+  // Handle video card mouse enter / leave preview on desktop grid
   const handleMouseEnter = (id: string) => {
     setHoveredCardId(id);
     const video = videoRefs.current[id];
@@ -89,41 +71,13 @@ function VideoPortfolioInner() {
     }
   };
 
-  // Modal navigation
-  const handleNextProject = () => {
-    if (!activeModalProject) return;
-    const currentIndex = filteredProjects.findIndex(p => p.id === activeModalProject.id);
-    const nextIndex = (currentIndex + 1) % filteredProjects.length;
-    setActiveModalProject(filteredProjects[nextIndex]);
+  const handleCardClick = (projectId: string) => {
+    const index = filteredProjects.findIndex(p => p.id === projectId);
+    setActiveReelIndex(index >= 0 ? index : 0);
   };
 
-  const handlePrevProject = () => {
-    if (!activeModalProject) return;
-    const currentIndex = filteredProjects.findIndex(p => p.id === activeModalProject.id);
-    const prevIndex = (currentIndex - 1 + filteredProjects.length) % filteredProjects.length;
-    setActiveModalProject(filteredProjects[prevIndex]);
-  };
-
-  // Keyboard navigation for modal
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setActiveModalProject(null);
-      if (e.key === 'ArrowRight') handleNextProject();
-      if (e.key === 'ArrowLeft') handlePrevProject();
-    };
-
-    if (activeModalProject) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleKeyDown);
-    } else {
-      document.body.style.overflow = '';
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [activeModalProject, filteredProjects]);
+  const activeCategoryObj = videoPortfolioCategories.find(c => c.id === selectedCategory);
+  const categoryTitle = activeCategoryObj ? activeCategoryObj.label : undefined;
 
   return (
     <div id="video-showcase" className={styles.portfolioWrapper} data-testid="video-portfolio">
@@ -200,11 +154,11 @@ function VideoPortfolioInner() {
                 className={`${styles.videoCard} ${isWidescreen ? styles.videoCardWidescreen : ''}`}
                 onMouseEnter={() => handleMouseEnter(project.id)}
                 onMouseLeave={() => handleMouseLeave(project.id)}
-                onClick={() => setActiveModalProject(project)}
+                onClick={() => handleCardClick(project.id)}
                 role="button"
                 tabIndex={0}
-                aria-label={`Play video: ${project.title} for ${project.client}`}
-                onKeyDown={(e) => e.key === 'Enter' && setActiveModalProject(project)}
+                aria-label={`Play reel: ${project.title} for ${project.client}`}
+                onKeyDown={(e) => e.key === 'Enter' && handleCardClick(project.id)}
               >
                 {/* Video Media Container */}
                 <div className={`${styles.mediaContainer} ${isWidescreen ? styles.widescreenAspect : styles.verticalAspect}`}>
@@ -248,7 +202,7 @@ function VideoPortfolioInner() {
                 <div className={styles.cardDetails}>
                   <div className={styles.clientMetaRow}>
                     <span className={styles.clientName}>{project.client}</span>
-                    <span className={styles.clickPrompt}>Watch Video &rarr;</span>
+                    <span className={styles.clickPrompt}>Watch Reel &rarr;</span>
                   </div>
                   <h3 className={styles.projectTitle}>{project.title}</h3>
                   <p className={styles.projectDesc}>{project.description}</p>
@@ -276,111 +230,14 @@ function VideoPortfolioInner() {
         )}
       </div>
 
-      {/* Fullscreen Interactive Video Player Modal */}
-      {activeModalProject && (
-        <div 
-          className={styles.modalBackdrop}
-          onClick={() => setActiveModalProject(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-label={activeModalProject.title}
-        >
-          <div 
-            className={styles.modalContent}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Close Button */}
-            <button 
-              className={styles.modalCloseBtn}
-              onClick={() => setActiveModalProject(null)}
-              aria-label="Close video player"
-            >
-              <X size={20} />
-            </button>
-
-            {/* Left/Prev Arrow */}
-            <button 
-              className={`${styles.navArrow} ${styles.prevArrow}`}
-              onClick={handlePrevProject}
-              aria-label="Previous project"
-            >
-              <ChevronLeft size={24} />
-            </button>
-
-            {/* Right/Next Arrow */}
-            <button 
-              className={`${styles.navArrow} ${styles.nextArrow}`}
-              onClick={handleNextProject}
-              aria-label="Next project"
-            >
-              <ChevronRight size={24} />
-            </button>
-
-            <div className={styles.modalGrid}>
-              {/* Video Player Column */}
-              <div className={styles.modalPlayerColumn}>
-                <div className={styles.modalVideoWrapper}>
-                  <video
-                    ref={modalVideoRef}
-                    key={activeModalProject.videoSrc}
-                    src={activeModalProject.videoSrc}
-                    controls
-                    autoPlay
-                    playsInline
-                    muted={modalMuted}
-                    className={styles.modalVideo}
-                  />
-                </div>
-              </div>
-
-              {/* Project Brief & Details Column */}
-              <div className={styles.modalDetailsColumn}>
-                <div className={styles.modalHeader}>
-                  <span className={styles.modalCategoryBadge}>{activeModalProject.categoryLabel}</span>
-                  <h3 className={styles.modalTitle}>{activeModalProject.title}</h3>
-                  <p className={styles.modalClient}>Client: <strong>{activeModalProject.client}</strong></p>
-                </div>
-
-                {/* Metric Spotlight */}
-                <div className={styles.modalMetricBox}>
-                  <div className={styles.modalMetricValue}>{activeModalProject.metric}</div>
-                  <div className={styles.modalMetricLabel}>{activeModalProject.metricLabel}</div>
-                </div>
-
-                <div className={styles.modalDescBlock}>
-                  <h4 className={styles.modalSectionTitle}>Project Brief &amp; Execution</h4>
-                  <p className={styles.modalDescText}>{activeModalProject.description}</p>
-                </div>
-
-                <div className={styles.modalTagsBlock}>
-                  <h4 className={styles.modalSectionTitle}>Editing Techniques Applied</h4>
-                  <div className={styles.modalTagsList}>
-                    {activeModalProject.tags.map((tag, idx) => (
-                      <span key={idx} className={styles.modalTagChip}>{tag}</span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* CTA Action */}
-                <div className={styles.modalCtaArea}>
-                  <button 
-                    type="button"
-                    className={styles.modalInquireBtn}
-                    onClick={() => {
-                      const projTitle = activeModalProject.title;
-                      setActiveModalProject(null);
-                      openContactModal(projTitle);
-                    }}
-                  >
-                    <span>Inquire Similar Video Edit</span>
-                    <ArrowRight size={16} />
-                  </button>
-                  <p className={styles.modalMicro}>Fast turnaround · 4K Master Delivery · Revisions Included</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Instagram Reels-Style Fullscreen Vertical Feed */}
+      {activeReelIndex !== null && (
+        <ReelViewer
+          items={filteredProjects}
+          initialIndex={activeReelIndex}
+          categoryTitle={categoryTitle}
+          onClose={() => setActiveReelIndex(null)}
+        />
       )}
     </div>
   );

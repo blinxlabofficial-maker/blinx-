@@ -15,7 +15,8 @@
   position: relative;
   background-color: var(--studio-white);
   color: var(--ink-black);
-  padding: 8rem 0 5rem;
+  padding-block: var(--section-gap-lg);
+  padding-inline: 0;
   text-align: center;
   overflow: hidden;
   border-bottom: 1px solid rgba(11, 11, 13, 0.06);
@@ -155,7 +156,8 @@
 
 /* Timeline Section */
 .timelineSection {
-  padding: 5.5rem 0;
+  padding-block: var(--section-gap-md);
+  padding-inline: 0;
   background: rgba(255, 255, 255, 0.5);
   border-bottom: 1px solid rgba(11, 11, 13, 0.06);
 }
@@ -171,7 +173,8 @@
 
 /* Segmentation Section */
 .segmentationSection {
-  padding: 5.5rem 0;
+  padding-block: var(--section-gap-md);
+  padding-inline: 0;
   background-color: var(--studio-white);
 }
 
@@ -257,7 +260,8 @@
   -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid rgba(11, 11, 13, 0.08);
   color: var(--ink-black);
-  padding: 6rem 0;
+  padding-block: var(--section-gap-md);
+  padding-inline: 0;
   text-align: center;
 }
 
@@ -271,19 +275,19 @@
 }
 
 @media (max-width: 768px) {
-  .hero { padding: 5.5rem 0 2.5rem; }
+  .hero { padding-block: var(--section-gap-sm); padding-inline: 0; }
   .title { font-size: clamp(1.85rem, 1.5rem + 2vw, 2.75rem); }
-  .timelineSection { padding: 3.5rem 0; }
+  .timelineSection { padding-block: var(--section-gap-sm); padding-inline: 0; }
   .sectionTitle, .sectionTitleDark { margin-bottom: 2rem; }
-  .segmentationSection { padding: 3.5rem 0; }
+  .segmentationSection { padding-block: var(--section-gap-sm); padding-inline: 0; }
   .segmentationGrid { gap: 1rem; }
   .segmentationCard { padding: 1.5rem 1.25rem; }
-  .cta { padding: 4rem 0; }
+  .cta { padding-block: var(--section-gap-sm); padding-inline: 0; }
   .ctaTitle { font-size: clamp(1.65rem, 1.4rem + 1.5vw, 2.25rem); margin-bottom: 1.5rem; }
 }
 
 @media (max-width: 480px) {
-  .hero { padding: 5.25rem 0 2rem; }
+  .hero { padding-block: var(--section-gap-sm); padding-inline: 0; }
   .timelineSection { padding: 2.5rem 0; }
   .segmentationSection { padding: 2.5rem 0; }
   .cta { padding: 3rem 0; }

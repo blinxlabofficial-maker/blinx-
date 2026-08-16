@@ -5,7 +5,7 @@
 .wordmark {
   display: inline-flex;
   align-items: baseline;
-  font-family: var(--font-headline), var(--font-syne), -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  font-family: var(--font-headline), -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 900;
   letter-spacing: -0.04em;
   user-select: none;

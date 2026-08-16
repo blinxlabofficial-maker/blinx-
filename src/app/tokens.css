@@ -1,5 +1,5 @@
 /* ============================================
-   BLINX LAB — Design Tokens (Clean, Calm & Glassmorphism)
+   BLINX LAB — Design Tokens (Apple-Caliber Design System)
    ============================================ */
 
 :root {
@@ -61,30 +61,30 @@
   --border-light-hover: rgba(11, 11, 13, 0.16);
 
   /* ---- Typography ---- */
-  --font-headline: var(--font-syne), -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: var(--font-dm-mono), monospace;
+  --font-headline: var(--font-outfit), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-dm-mono), 'SF Mono', 'Cascadia Code', monospace;
 
-  /* Fluid Type Scale */
-  --text-xs: clamp(0.75rem, 0.7rem + 0.15vw, 0.8125rem);
+  /* Fluid Type Scale (Apple-caliber sizing) */
+  --text-xs: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
   --text-sm: clamp(0.8125rem, 0.78rem + 0.2vw, 0.875rem);
-  --text-base: clamp(0.9375rem, 0.9rem + 0.25vw, 1.0625rem);
-  --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
-  --text-xl: clamp(1.35rem, 1.25rem + 0.5vw, 1.625rem);
-  --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
-  --text-3xl: clamp(1.85rem, 1.6rem + 1.6vw, 3rem);
-  --text-4xl: clamp(2.25rem, 1.9rem + 2.5vw, 4.25rem);
-  --text-5xl: clamp(2.5rem, 2rem + 3.8vw, 5.75rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.3125rem);
+  --text-xl: clamp(1.375rem, 1.25rem + 0.6vw, 1.75rem);
+  --text-2xl: clamp(1.625rem, 1.4rem + 1.1vw, 2.5rem);
+  --text-3xl: clamp(2rem, 1.7rem + 1.8vw, 3.25rem);
+  --text-4xl: clamp(2.5rem, 2rem + 2.8vw, 4.5rem);
+  --text-5xl: clamp(3rem, 2.2rem + 4vw, 6rem);
 
   /* Line Heights */
-  --leading-tight: 1.05;
-  --leading-snug: 1.2;
-  --leading-normal: 1.6;
+  --leading-tight: 1.08;
+  --leading-snug: 1.22;
+  --leading-normal: 1.65;
   --leading-relaxed: 1.75;
 
   /* Letter Spacing */
-  --tracking-tighter: -0.04em;
-  --tracking-tight: -0.02em;
+  --tracking-tighter: -0.045em;
+  --tracking-tight: -0.025em;
   --tracking-normal: 0;
   --tracking-wide: 0.05em;
   --tracking-wider: 0.1em;
@@ -111,14 +111,17 @@
   --space-11: 6rem;
   --space-12: 8rem;
 
-  /* Section Spacing */
+  /* Section Spacing (Apple-style rhythm) */
   --section-pad-y: clamp(3.5rem, 3rem + 4vw, 9rem);
   --section-pad-x: clamp(1.25rem, 0.8rem + 3vw, 4rem);
+  --section-gap-sm: clamp(3rem, 2.5rem + 2.5vw, 5rem);
+  --section-gap-md: clamp(4rem, 3.5rem + 3.5vw, 7rem);
+  --section-gap-lg: clamp(5rem, 4rem + 5vw, 10rem);
 
   /* Containers */
-  --container-max: 1240px;
-  --container-wide: 1360px;
-  --container-narrow: 760px;
+  --container-max: 1200px;
+  --container-wide: 1400px;
+  --container-narrow: 980px;
 
   /* ---- Motion & Transitions ---- */
   --ease-calm: cubic-bezier(0.16, 1, 0.3, 1);
@@ -139,13 +142,17 @@
   --shadow-glow-red: 0 0 35px rgba(255, 60, 90, 0.25);
   --shadow-glow-yellow: 0 0 35px rgba(255, 214, 0, 0.2);
 
-  /* ---- Z-index ---- */
+  /* ---- Z-index System ---- */
   --z-base: 0;
   --z-above: 10;
   --z-sticky: 100;
   --z-nav: 500;
   --z-overlay: 900;
   --z-modal: 1000;
+  --z-floating: 1100;
+  --z-modal-backdrop: 1200;
+  --z-modal-content: 1300;
+  --z-cursor: 999999;
 
   /* ---- Border Radius ---- */
   --radius-xs: 4px;
@@ -153,6 +160,7 @@
   --radius-md: 12px;
   --radius-lg: 18px;
   --radius-xl: 24px;
+  --radius-2xl: 32px;
   --radius-full: 9999px;
 }
 
@@ -160,6 +168,10 @@
 @media (max-width: 480px) {
   :root {
     --section-pad-y: clamp(2.5rem, 2rem + 3vw, 4rem);
+    --section-gap-sm: clamp(2rem, 1.5rem + 2vw, 3rem);
+    --section-gap-md: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+    --section-gap-lg: clamp(3rem, 2.5rem + 3vw, 5rem);
+    --radius-2xl: 24px;
     --radius-xl: 18px;
     --radius-lg: 14px;
   }

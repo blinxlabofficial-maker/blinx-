@@ -44,7 +44,7 @@
 /* Left Brand Logo */
 .logoLink {
   text-decoration: none;
-  z-index: 501;
+  z-index: calc(var(--z-nav) + 1);
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -135,7 +135,7 @@
   visibility: hidden;
   pointer-events: none;
   transition: all 0.25s var(--ease-calm);
-  z-index: 600;
+  z-index: calc(var(--z-nav) + 100);
 }
 
 /* Hover bridge so mouse movement doesn't drop the menu */
@@ -314,7 +314,7 @@
   border: 1px solid rgba(11, 11, 13, 0.08);
   color: var(--ink-black);
   cursor: pointer;
-  z-index: 502;
+  z-index: calc(var(--z-nav) + 2);
   transition: all 0.2s ease;
 }
 
@@ -331,7 +331,7 @@
   background-color: rgba(248, 247, 244, 0.98);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  z-index: 499;
+  z-index: calc(var(--z-nav) - 1);
   padding: 6.5rem 2rem 3rem;
   display: flex;
   flex-direction: column;
@@ -479,7 +479,7 @@
 /* ============================================
    RESPONSIVE BREAKPOINTS
    ============================================ */
-@media (max-width: 960px) {
+@media (max-width: 1024px) {
   .nav,
   .rightActions {
     display: none;
@@ -524,7 +524,7 @@
   }
 }
 
-@media (max-width: 1100px) and (min-width: 961px) {
+@media (max-width: 1280px) and (min-width: 1025px) {
   .megaMenu {
     width: min(680px, 90vw);
     left: 50%;

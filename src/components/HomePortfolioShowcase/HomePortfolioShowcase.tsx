@@ -1,22 +1,17 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
   Play, 
   ExternalLink, 
   ArrowRight, 
-  Globe, 
   Flame, 
-  Sparkles, 
-  CheckCircle2, 
-  X,
-  Layers,
-  ChevronRight
+  Sparkles 
 } from 'lucide-react';
 import SectionReveal from '../SectionReveal/SectionReveal';
-import { useContactModal } from '@/context/ContactModalContext';
+import ReelViewer, { ReelItem } from '../ReelViewer/ReelViewer';
 import styles from './HomePortfolioShowcase.module.css';
 
 interface FeaturedItem {
@@ -126,9 +121,8 @@ const featuredItems: FeaturedItem[] = [
 ];
 
 export default function HomePortfolioShowcase() {
-  const { openContactModal } = useContactModal();
   const [filterType, setFilterType] = useState<'all' | 'website' | 'video'>('all');
-  const [activeModalVideo, setActiveModalVideo] = useState<FeaturedItem | null>(null);
+  const [activeReelIndex, setActiveReelIndex] = useState<number | null>(null);
   const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
 
   const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
@@ -137,6 +131,23 @@ export default function HomePortfolioShowcase() {
     if (filterType === 'all') return true;
     return item.type === filterType;
   });
+
+  const featuredVideoReels: ReelItem[] = useMemo(() => {
+    return featuredItems
+      .filter((item) => item.type === 'video')
+      .map((item) => ({
+        id: item.id,
+        title: item.title,
+        client: item.client,
+        categoryLabel: item.categoryLabel,
+        videoSrc: item.mediaSrc,
+        aspectRatio: item.aspectRatio || '9:16',
+        duration: item.duration,
+        metric: item.metric,
+        metricLabel: item.metricLabel,
+        tags: item.techOrTags
+      }));
+  }, []);
 
   const handleMouseEnter = (id: string, type: string) => {
     setHoveredCardId(id);
@@ -160,24 +171,10 @@ export default function HomePortfolioShowcase() {
     }
   };
 
-  // Keyboard navigation for modal
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setActiveModalVideo(null);
-    };
-
-    if (activeModalVideo) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleKeyDown);
-    } else {
-      document.body.style.overflow = '';
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [activeModalVideo]);
+  const handleVideoClick = (id: string) => {
+    const idx = featuredVideoReels.findIndex((r) => r.id === id);
+    setActiveReelIndex(idx >= 0 ? idx : 0);
+  };
 
   return (
     <section className={`${styles.section} ${styles.darkBg}`} data-testid="home-portfolio">
@@ -229,7 +226,10 @@ export default function HomePortfolioShowcase() {
                   className={styles.card}
                   onMouseEnter={() => handleMouseEnter(item.id, item.type)}
                   onMouseLeave={() => handleMouseLeave(item.id, item.type)}
-                  onClick={() => isVideo && setActiveModalVideo(item)}
+                  onClick={() => isVideo && handleVideoClick(item.id)}
+                  role={isVideo ? 'button' : undefined}
+                  tabIndex={isVideo ? 0 : undefined}
+                  onKeyDown={isVideo ? (e) => e.key === 'Enter' && handleVideoClick(item.id) : undefined}
                 >
                   {/* Media Frame */}
                   <div className={styles.mediaFrame}>
@@ -337,64 +337,14 @@ export default function HomePortfolioShowcase() {
         </SectionReveal>
       </div>
 
-      {/* Video Modal Player */}
-      {activeModalVideo && (
-        <div 
-          className={styles.modalBackdrop}
-          onClick={() => setActiveModalVideo(null)}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <button 
-              className={styles.modalCloseBtn}
-              onClick={() => setActiveModalVideo(null)}
-              aria-label="Close video player"
-            >
-              <X size={20} />
-            </button>
-
-            <div className={styles.modalGrid}>
-              <div className={styles.modalVideoCol}>
-                <video
-                  src={activeModalVideo.mediaSrc}
-                  controls
-                  autoPlay
-                  playsInline
-                  className={styles.modalVideo}
-                />
-              </div>
-
-              <div className={styles.modalInfoCol}>
-                <span className={styles.modalCategoryBadge}>{activeModalVideo.categoryLabel}</span>
-                <h3 className={styles.modalTitle}>{activeModalVideo.title}</h3>
-                <p className={styles.modalClient}>Client: <strong>{activeModalVideo.client}</strong></p>
-
-                <div className={styles.modalMetricBox}>
-                  <div className={styles.modalMetricVal}>{activeModalVideo.metric}</div>
-                  <div className={styles.modalMetricSub}>{activeModalVideo.metricLabel}</div>
-                </div>
-
-                <p className={styles.modalDesc}>{activeModalVideo.description}</p>
-
-                <div className={styles.modalCtaArea}>
-                  <button 
-                    type="button"
-                    className={styles.modalBtn}
-                    onClick={() => {
-                      const projTitle = activeModalVideo.title;
-                      setActiveModalVideo(null);
-                      openContactModal(projTitle);
-                    }}
-                  >
-                    <span>Inquire Similar Project</span>
-                    <ArrowRight size={16} />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Instagram Reels-Style Video Feed Modal */}
+      {activeReelIndex !== null && (
+        <ReelViewer
+          items={featuredVideoReels}
+          initialIndex={activeReelIndex}
+          categoryTitle="Featured Productions"
+          onClose={() => setActiveReelIndex(null)}
+        />
       )}
     </section>
   );

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, DM_Sans, DM_Mono } from "next/font/google";
+import { Outfit, DM_Sans, DM_Mono } from "next/font/google";
 import { Navbar } from "@/components/Navbar/Navbar";
 import { Footer } from "@/components/Footer/Footer";
 import CustomCursor from "@/components/CustomCursor/CustomCursor";
@@ -8,10 +8,10 @@ import { ContactModalProvider } from "@/context/ContactModalContext";
 import ContactModal from "@/components/ContactModal/ContactModal";
 import "./globals.css";
 
-const syne = Syne({
+const outfit = Outfit({
   subsets: ["latin"],
-  weight: ["700", "800"],
-  variable: "--font-syne",
+  weight: ["600", "700", "800"],
+  variable: "--font-outfit",
   display: "swap",
 });
 
@@ -70,7 +70,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${dmSans.variable} ${dmMono.variable}`}
+      className={`${outfit.variable} ${dmSans.variable} ${dmMono.variable}`}
     >
       <body>
         <ContactModalProvider>

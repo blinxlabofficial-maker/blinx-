@@ -14,7 +14,8 @@
   perspective: 1000px;
   background-color: var(--studio-white);
   color: var(--ink-black);
-  padding: 6.5rem 0 4.5rem;
+  padding-block: var(--section-gap-lg);
+  padding-inline: 0;
 }
 
 /* ============================================
@@ -198,7 +199,7 @@
 
 /* Meta Data Top Bar */
 .metaData {
-  font-family: var(--font-dm-mono), monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 0.72rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -225,7 +226,7 @@
 
 /* Headline */
 .headline {
-  font-family: var(--font-syne), sans-serif;
+  font-family: var(--font-headline), sans-serif;
   font-size: clamp(2.25rem, 1.8rem + 3.2vw, 4.25rem);
   line-height: 1.08;
   letter-spacing: -0.035em;
@@ -312,7 +313,7 @@
 
 /* Subhead */
 .subhead {
-  font-family: var(--font-dm-sans), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: clamp(0.98rem, 0.92rem + 0.25vw, 1.15rem);
   color: var(--text-muted-light);
   max-width: 600px;
@@ -341,7 +342,7 @@
   border: 1px solid transparent;
   background: #0B0B0D;
   color: #FFFFFF;
-  font-family: var(--font-dm-mono), monospace;
+  font-family: var(--font-mono), monospace;
   text-transform: uppercase;
   text-decoration: none;
   font-size: 0.85rem;
@@ -384,7 +385,7 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   color: var(--ink-black);
-  font-family: var(--font-dm-mono), monospace;
+  font-family: var(--font-mono), monospace;
   text-transform: uppercase;
   text-decoration: none;
   font-size: 0.85rem;
@@ -403,7 +404,7 @@
 }
 
 .versionTag {
-  font-family: var(--font-dm-mono), monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 0.75rem;
   color: rgba(11, 11, 13, 0.45);
   letter-spacing: 0.1em;
@@ -417,7 +418,7 @@
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
-  font-family: var(--font-dm-mono), monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 0.62rem;
   letter-spacing: 0.22em;
   color: rgba(11, 11, 13, 0.4);
@@ -461,7 +462,7 @@
 /* ============================================
    RESPONSIVE
    ============================================ */
-@media (max-width: 1200px) {
+@media (max-width: 1280px) {
   .floatingBadge {
     display: none;
   }
@@ -471,7 +472,8 @@
   .hero {
     min-height: 100vh;
     min-height: 100svh;
-    padding: 5.5rem 0 3.5rem;
+    padding-block: var(--section-gap-md);
+    padding-inline: 0;
   }
 
   .content { padding: 0 1rem; width: 100%; max-width: 100%; }
@@ -518,7 +520,10 @@
 }
 
 @media (max-width: 480px) {
-  .hero { padding: 5rem 0 2.5rem; }
+  .hero {
+    padding-block: var(--section-gap-sm);
+    padding-inline: 0;
+  }
   .headline { font-size: clamp(1.65rem, 1.25rem + 2.4vw, 2.25rem); }
   .content { padding: 0 0.75rem; }
   .subhead { font-size: 0.95rem; }

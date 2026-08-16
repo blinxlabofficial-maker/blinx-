@@ -3,10 +3,11 @@
    ============================================ */
 
 .section {
-  padding-block: var(--section-pad-y);
+  padding-block: var(--section-gap-lg);
   position: relative;
   background-color: var(--studio-white);
   color: var(--ink-black);
+  overflow: hidden;
 }
 
 .container {
@@ -30,6 +31,7 @@
   font-weight: 700;
   margin-bottom: 1rem;
   display: block;
+  text-transform: uppercase;
 }
 
 .sectionTitle {
@@ -49,9 +51,7 @@
   line-height: 1.6;
 }
 
-/* ============================================
-   GRID LAYOUT
-   ============================================ */
+/* Grid Layout */
 .flywheelGrid {
   display: grid;
   grid-template-columns: 1fr 1.15fr;
@@ -65,6 +65,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1.25rem;
+  width: 100%;
 }
 
 .diagramHint {
@@ -75,19 +76,21 @@
   font-size: 0.7rem;
   color: var(--text-muted-light);
   letter-spacing: 0.05em;
+  text-align: center;
 }
 
 .hintIcon {
   color: var(--electric-red);
+  flex-shrink: 0;
 }
 
-/* ============================================
-   RIGHT COLUMN: STAGE DECK (Light Theme)
-   ============================================ */
+/* Right Column: Stage Deck */
 .flywheelTextCol {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  width: 100%;
+  min-width: 0;
 }
 
 /* Track Steps Bar */
@@ -99,6 +102,7 @@
   border: 1px solid rgba(11, 11, 13, 0.08);
   border-radius: var(--radius-lg);
   padding: 0.4rem;
+  width: 100%;
 }
 
 .trackStep {
@@ -113,6 +117,7 @@
   cursor: pointer;
   transition: all 0.25s var(--ease-calm);
   position: relative;
+  min-width: 0;
 }
 
 .trackNumber {
@@ -127,6 +132,10 @@
   font-weight: 700;
   font-size: 0.8rem;
   color: rgba(11, 11, 13, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .trackIndicator {
@@ -158,7 +167,7 @@
   width: 60%;
 }
 
-/* Compact Active Card (Light Glass) */
+/* Active Card Deck */
 .activeCard {
   background: rgba(255, 255, 255, 0.88);
   border: 1px solid rgba(11, 11, 13, 0.1);
@@ -171,6 +180,7 @@
   flex-direction: column;
   transition: opacity 0.25s var(--ease-calm), transform 0.25s var(--ease-calm);
   animation: cardSlideIn 0.35s var(--ease-calm);
+  width: 100%;
 }
 
 .cardTransitioning {
@@ -193,11 +203,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
   margin-bottom: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .phaseBadgeBox {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.45rem;
 }
@@ -208,6 +220,7 @@
   border-radius: 50%;
   background: var(--electric-red);
   box-shadow: 0 0 8px rgba(255, 60, 90, 0.4);
+  flex-shrink: 0;
 }
 
 .stagePhaseBadge {
@@ -222,11 +235,12 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
+  flex-shrink: 0;
 }
 
 .navBtn {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: rgba(11, 11, 13, 0.04);
   border: 1px solid rgba(11, 11, 13, 0.08);
@@ -258,7 +272,7 @@
   gap: 0.4rem;
   padding: 0.65rem 0.95rem;
   background: rgba(11, 11, 13, 0.03);
-  border-left: 2px solid var(--electric-red);
+  border-left: 3px solid var(--electric-red);
   border-radius: var(--radius-xs);
   margin-bottom: 1rem;
   font-size: 0.88rem;
@@ -271,6 +285,7 @@
   letter-spacing: 0.05em;
   color: var(--electric-red);
   text-transform: uppercase;
+  flex-shrink: 0;
 }
 
 .outcomeBanner span {
@@ -329,6 +344,7 @@
   justify-content: space-between;
   padding-top: 1.25rem;
   border-top: 1px solid rgba(11, 11, 13, 0.06);
+  gap: 0.75rem;
 }
 
 .stageLink {
@@ -357,72 +373,77 @@
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease;
+  white-space: nowrap;
 }
 
 .nextStepTrigger:hover {
   transform: translateX(3px);
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
+/* Responsive */
 @media (max-width: 1024px) {
   .flywheelGrid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.5rem;
   }
 }
 
 @media (max-width: 768px) {
-  .sectionHeader { margin: 0 auto 2rem; }
-  .navBtn { width: 44px; height: 44px; }
-  
-  .stageTrack {
-    overflow-x: auto;
-    display: flex;
-    justify-content: flex-start;
-    padding: 0.35rem;
-    gap: 0.35rem;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+  .section {
+    padding-block: var(--section-gap-md);
   }
-  .stageTrack::-webkit-scrollbar { display: none; }
-
-  .trackStep {
-    min-width: 85px;
-    flex-shrink: 0;
-    padding: 0.65rem 0.4rem;
-    min-height: 44px;
-    scroll-snap-align: start;
+  .sectionHeader {
+    margin: 0 auto 2rem;
   }
-
+  .navBtn {
+    width: 36px;
+    height: 36px;
+  }
   .activeCard {
     padding: 1.75rem 1.25rem;
   }
-
   .stageTitle {
     font-size: 1.45rem;
   }
-
   .outcomeBanner {
     flex-wrap: wrap;
     gap: 0.35rem;
   }
-
-  .stageFooter {
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
 }
 
 @media (max-width: 480px) {
-  .section { padding-block: 2.5rem; }
-  .sectionHeader { margin: 0 auto 1.5rem; }
-  .sectionTitle { font-size: clamp(1.65rem, 1.35rem + 1.8vw, 2.15rem); }
-  .activeCard { padding: 1.5rem 1rem; }
-  .stageTitle { font-size: 1.25rem; }
-  .phaseBadgeBox { flex-wrap: wrap; }
+  .section {
+    padding-block: var(--section-gap-sm);
+  }
+  .sectionHeader {
+    margin: 0 auto 1.5rem;
+  }
+  .sectionTitle {
+    font-size: clamp(1.65rem, 1.35rem + 1.8vw, 2.15rem);
+  }
+  .stageTrack {
+    gap: 0.25rem;
+    padding: 0.25rem;
+  }
+  .trackStep {
+    padding: 0.45rem 0.2rem;
+  }
+  .trackNumber {
+    font-size: 0.62rem;
+  }
+  .trackTitle {
+    font-size: 0.68rem;
+  }
+  .activeCard {
+    padding: 1.25rem 1rem;
+  }
+  .stageTitle {
+    font-size: 1.25rem;
+  }
+  .stageFooter {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

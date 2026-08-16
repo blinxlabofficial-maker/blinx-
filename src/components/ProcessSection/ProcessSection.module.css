@@ -6,7 +6,8 @@
   position: relative;
   background-color: var(--surface-light, #F8F7F4);
   color: var(--ink-black);
-  padding: 7rem 0 6rem;
+  padding-block: var(--section-gap-md);
+  padding-inline: 0;
   overflow: hidden;
 }
 
@@ -138,7 +139,7 @@
 }
 
 .stepNumber {
-  font-family: var(--font-syne);
+  font-family: var(--font-headline);
   font-size: 1.4rem;
   font-weight: 800;
   color: rgba(11, 11, 13, 0.2);
@@ -313,29 +314,17 @@
 }
 
 /* Responsive Breakpoints */
-@media (max-width: 1200px) {
+@media (max-width: 1280px) {
   .timelineGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 }
 
-@media (max-width: 860px) {
-  .bottomBanner {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem 1.75rem;
-  }
-
-  .bannerBtn {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
 @media (max-width: 768px) {
   .section {
-    padding: 4.5rem 0;
+    padding-block: var(--section-gap-sm);
+    padding-inline: 0;
   }
 
   .header {
@@ -350,6 +339,17 @@
 
   .stepCard {
     padding: 1.75rem 1.5rem;
+  }
+
+  .bottomBanner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 1.75rem;
+  }
+
+  .bannerBtn {
+    width: 100%;
+    justify-content: center;
   }
 }
 

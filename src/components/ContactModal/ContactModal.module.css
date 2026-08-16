@@ -8,7 +8,7 @@
   background: rgba(0, 0, 0, 0.72);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  z-index: 99999;
+  z-index: var(--z-modal-backdrop);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,6 +19,7 @@
 
 .modalContent {
   position: relative;
+  z-index: var(--z-modal-content);
   width: 100%;
   max-width: 440px;
   background: #F8F7F4;

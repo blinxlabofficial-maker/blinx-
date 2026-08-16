@@ -78,7 +78,7 @@
   border: 1px solid rgba(11, 11, 13, 0.1);
   padding: 1.15rem 1.25rem;
   text-align: left;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   font-family: var(--font-body);
   font-size: 0.95rem;
   color: var(--ink-black);
@@ -168,7 +168,7 @@
   padding: 1.1rem;
   padding-top: 1.5rem;
   border: 1px solid rgba(11, 11, 13, 0.12);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.9);
   font-family: var(--font-body);
   font-size: 0.95rem;
