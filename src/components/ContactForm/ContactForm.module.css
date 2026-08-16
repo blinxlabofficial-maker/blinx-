@@ -1,0 +1,305 @@
+/* ============================================
+   CONTACT FORM — Compact Form with Resilient Fallbacks
+   ============================================ */
+
+.formContainer {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 1.5rem 1.4rem;
+  border: 1px solid rgba(11, 11, 13, 0.08);
+  border-radius: var(--radius-xl);
+  font-family: var(--font-body);
+  color: var(--ink-black);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  position: relative;
+}
+
+.modalFormContainer {
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+/* Floating Label Inputs */
+.formGroup {
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 1.05rem 2.25rem 0.4rem 0.95rem;
+  border: 1px solid rgba(11, 11, 13, 0.12);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.85);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--ink-black);
+  transition: all 0.2s var(--ease-calm);
+}
+
+.formGroup input:focus {
+  outline: none;
+  background: #FFFFFF;
+  border-color: var(--electric-red);
+  box-shadow: 0 0 0 3px rgba(255, 60, 90, 0.1);
+}
+
+.formGroup label {
+  position: absolute;
+  left: 0.95rem;
+  top: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: rgba(11, 11, 13, 0.5);
+  pointer-events: none;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: left top;
+}
+
+/* Floating behavior */
+.formGroup input:focus ~ label,
+.formGroup input:not(:placeholder-shown) ~ label {
+  top: 0.28rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--electric-red);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.inputIcon {
+  position: absolute;
+  right: 0.9rem;
+  top: 0.85rem;
+  color: rgba(11, 11, 13, 0.32);
+  pointer-events: none;
+}
+
+.errorText {
+  font-family: var(--font-mono);
+  color: #EF4444;
+  font-size: 0.68rem;
+  margin-top: 0.25rem;
+  display: block;
+  font-weight: 600;
+}
+
+/* Fallback Error Box */
+.formErrorBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.75rem 0.95rem;
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  border-radius: var(--radius-sm);
+  color: #DC2626;
+  font-size: 0.78rem;
+  margin-bottom: 0.75rem;
+}
+
+.errorHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+.errorSub {
+  font-size: 0.72rem;
+  color: rgba(11, 11, 13, 0.7);
+  margin: 0;
+}
+
+.fallbackActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.mailtoBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--ink-black);
+  color: #FFFFFF;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.mailtoBtn:hover {
+  background: var(--electric-red);
+}
+
+.retryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(11, 11, 13, 0.06);
+  color: var(--ink-black);
+  border: 1px solid rgba(11, 11, 13, 0.12);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.retryBtn:hover {
+  background: rgba(11, 11, 13, 0.12);
+}
+
+/* Submit Action Area */
+.submitArea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.submitButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: var(--ink-black);
+  color: #FFFFFF;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--radius-full);
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.22s var(--ease-calm);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.submitButton:hover:not(:disabled) {
+  background: var(--electric-red);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 60, 90, 0.35);
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btnContent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btnLoading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.spinner {
+  width: 13px;
+  height: 13px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.trustFooter {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted-light);
+}
+
+/* Success Celebration State */
+.successStateWrapper {
+  text-align: center;
+  padding: 1.25rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeInDown 0.35s ease forwards;
+}
+
+.successIconCircle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #10B981;
+  margin-bottom: 0.75rem;
+}
+
+.successBadge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #10B981;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.successHeading {
+  font-family: var(--font-headline);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ink-black);
+  margin-bottom: 0.4rem;
+}
+
+.successBody {
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  color: var(--text-muted-light);
+  line-height: 1.5;
+  max-width: 320px;
+  margin: 0 auto 1.25rem;
+}
+
+.resetFormBtn {
+  background: transparent;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--electric-red);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: transform 0.2s ease;
+}
+
+.resetFormBtn:hover {
+  transform: translateX(3px);
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

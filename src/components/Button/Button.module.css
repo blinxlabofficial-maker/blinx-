@@ -1,0 +1,141 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.75rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-calm);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.text {
+  position: relative;
+  z-index: 1;
+}
+
+.icon {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.25s var(--ease-calm);
+}
+
+.button:hover .icon {
+  transform: translateX(4px);
+}
+
+/* Primary Button */
+.primary {
+  background: var(--gradient-primary);
+  color: #0B0B0D;
+  box-shadow: 0 4px 18px rgba(255, 60, 90, 0.28);
+}
+
+.primary:hover {
+  filter: brightness(1.06);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(255, 60, 90, 0.38);
+}
+
+.primary .icon {
+  color: #0B0B0D;
+}
+
+/* Secondary Frosted Glass (Light Theme) */
+.secondary {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--ink-black);
+  border-color: rgba(11, 11, 13, 0.12);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.secondary:hover {
+  background: #FFFFFF;
+  border-color: rgba(11, 11, 13, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Ghost */
+.ghost {
+  background-color: transparent;
+  color: currentColor;
+  padding: 0.5rem 1rem;
+}
+
+.ghost:hover {
+  opacity: 0.8;
+  transform: translateX(2px);
+}
+
+/* Loading & Success */
+.loading {
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.loadingDot {
+  width: 8px;
+  height: 8px;
+  background-color: currentColor;
+  border-radius: 50%;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  100% { transform: scale(1.2); opacity: 1; }
+}
+
+.success {
+  background: #10B981 !important;
+  color: #FFFFFF !important;
+  pointer-events: none;
+}
+
+.checkIcon {
+  width: 20px;
+  height: 20px;
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: drawCheck 0.4s ease forwards;
+}
+
+@keyframes drawCheck {
+  to { stroke-dashoffset: 0; }
+}
+
+@media (max-width: 480px) {
+  .button {
+    padding: 0.75rem 1.4rem;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .button:hover,
+  .button:hover .icon {
+    transform: none !important;
+    transition: none !important;
+  }
+  .loadingDot {
+    animation: none;
+  }
+  .checkIcon {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}

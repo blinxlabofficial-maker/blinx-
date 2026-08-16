@@ -1,0 +1,790 @@
+/* ============================================
+   BLINX LAB — Homepage Styles (Studio Light Theme & Glassmorphism)
+   ============================================ */
+
+.section {
+  padding-block: var(--section-pad-y);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+  position: relative;
+  z-index: 2;
+}
+
+.narrowContainer {
+  max-width: var(--container-narrow);
+}
+
+.darkBg {
+  background-color: var(--studio-white);
+  color: var(--ink-black);
+}
+
+.lightBg {
+  background-color: #FFFFFF;
+  color: var(--ink-black);
+}
+
+/* ---- Inter-Section Wave Transitions ---- */
+.transitionDarkToLight {
+  width: 100%;
+  height: 50px;
+  background-color: var(--studio-white);
+  overflow: hidden;
+  line-height: 0;
+  margin-top: -1px;
+}
+
+.transitionLightToDark {
+  width: 100%;
+  height: 50px;
+  background-color: #FFFFFF;
+  overflow: hidden;
+  line-height: 0;
+  margin-top: -1px;
+}
+
+.transitionSvg {
+  width: 100%;
+  height: 50px;
+  display: block;
+}
+
+/* ---- Category Badges & Headers ---- */
+.categoryTagDark,
+.categoryTagLight {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--electric-red);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.sectionHeaderCenter {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 4.5rem;
+}
+
+.sectionTitle,
+.sectionTitleDark {
+  font-family: var(--font-headline);
+  font-size: clamp(2rem, 1.7rem + 2vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-black);
+}
+
+/* ============================================
+   2. THE PROBLEM SECTION
+   ============================================ */
+.problemSection {
+  padding: 7rem 0;
+  text-align: center;
+}
+
+.editorialQuote {
+  font-family: var(--font-body);
+  font-size: clamp(1.35rem, 1.15rem + 1.2vw, 2.15rem);
+  line-height: 1.5;
+  color: var(--ink-black);
+  font-weight: 500;
+  margin-top: 1.5rem;
+}
+
+.problemLine {
+  margin-bottom: 2rem;
+}
+
+.highlightLine {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+}
+
+.underlineSvg {
+  position: absolute;
+  bottom: -0.35rem;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  pointer-events: none;
+}
+
+.underlineSvg path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  transition: stroke-dashoffset 0.8s var(--ease-calm);
+  transition-delay: 200ms;
+}
+
+:global(.revealed) .underlineSvg path {
+  stroke-dashoffset: 0;
+}
+
+/* ============================================
+   4. VALUE / IMPACT STRIP (Studio Light Glass)
+   ============================================ */
+.valueSection {
+  padding: 4rem 0 6rem;
+}
+
+.valueGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.valueItem {
+  padding: 2.75rem 2.25rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(11, 11, 13, 0.08);
+  border-radius: var(--radius-xl);
+  position: relative;
+  transition: all 0.3s var(--ease-calm);
+  height: 100%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.valueItem:hover {
+  background: #FFFFFF;
+  border-color: rgba(255, 60, 90, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.accentLine {
+  width: 32px;
+  height: 3px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+  margin-bottom: 1.5rem;
+}
+
+.valueNumber {
+  position: absolute;
+  top: 1.75rem;
+  right: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: rgba(11, 11, 13, 0.35);
+  font-weight: 600;
+}
+
+.valueItem h3 {
+  font-family: var(--font-headline);
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--ink-black);
+}
+
+.valueItem p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: var(--leading-normal);
+  color: var(--text-muted-light);
+}
+
+/* ============================================
+   6. AUDIENCE (WHO WE HELP) (Studio Light Glass)
+   ============================================ */
+.audienceGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.audienceCard {
+  padding: 3rem 2.25rem;
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(11, 11, 13, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.35s var(--ease-calm);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.audienceCard:hover {
+  background: #FFFFFF;
+  border-color: rgba(11, 11, 13, 0.18);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.09);
+}
+
+.audienceCardFeatured {
+  background: #FFFFFF;
+  border-color: rgba(255, 60, 90, 0.35);
+  box-shadow: 0 12px 36px rgba(255, 60, 90, 0.1);
+}
+
+.featuredTag {
+  position: absolute;
+  top: -12px;
+  right: 24px;
+  background: var(--gradient-primary);
+  color: #0B0B0D;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.audienceBadge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--electric-red);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.audienceCard h3 {
+  font-family: var(--font-headline);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--ink-black);
+  margin-bottom: 1rem;
+}
+
+.audienceDesc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-muted-light);
+  line-height: var(--leading-normal);
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.audienceList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(11, 11, 13, 0.08);
+}
+
+.audienceList li {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--ink-black);
+}
+
+.checkIcon {
+  color: var(--electric-red);
+  flex-shrink: 0;
+}
+
+/* ============================================
+   7. WHY BLINX SECTION (Studio Light Glass)
+   ============================================ */
+.whyGrid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4.5rem;
+  align-items: center;
+}
+
+.whyContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandCopy {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  line-height: 1.65;
+  color: var(--text-muted-light);
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.whyPillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.whyPillar strong {
+  display: block;
+  font-family: var(--font-headline);
+  font-size: 1.1rem;
+  color: var(--ink-black);
+  margin-bottom: 0.4rem;
+}
+
+.whyPillar span {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-muted-light);
+  line-height: 1.5;
+}
+
+.whyVisual {
+  display: flex;
+  justify-content: center;
+}
+
+.convergingContainer {
+  padding: 3.5rem 2.5rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(11, 11, 13, 0.08);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 380px;
+}
+
+.arrowsSvg {
+  width: 180px;
+  height: auto;
+}
+
+.arrowPath, .arrowPathRight {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  transition: stroke-dashoffset 0.8s var(--ease-calm) 0.2s;
+}
+
+.arrowHead, .arrowHeadRight {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.4s var(--ease-calm) 0.8s;
+}
+
+.arrowHeadRight {
+  transform: translateX(8px);
+}
+
+.centerDot {
+  transform: scale(0);
+  transform-origin: 120px 75px;
+  transition: transform 0.4s var(--ease-calm) 1s;
+}
+
+:global(.revealed) .arrowPath,
+:global(.revealed) .arrowPathRight {
+  stroke-dashoffset: 0;
+}
+
+:global(.revealed) .arrowHead,
+:global(.revealed) .arrowHeadRight {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+:global(.revealed) .centerDot {
+  transform: scale(1);
+}
+
+.convergingLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-black);
+  font-weight: 600;
+}
+
+/* ============================================
+   8. FEATURED WORK SECTION (Studio Light Glass)
+   ============================================ */
+.workHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 4rem;
+  border-bottom: 1px solid rgba(11, 11, 13, 0.08);
+  padding-bottom: 2rem;
+}
+
+.workList {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.workRow {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 4.5rem;
+  align-items: center;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(11, 11, 13, 0.08);
+  border-radius: var(--radius-xl);
+  transition: all 0.35s var(--ease-calm);
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.workRow:hover {
+  background: #FFFFFF;
+  border-color: rgba(255, 60, 90, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+}
+
+.workRowContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.workTags {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.workIndustryTag, .workLocationTag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.workIndustryTag {
+  background: rgba(255, 60, 90, 0.1);
+  color: var(--electric-red);
+  border: 1px solid rgba(255, 60, 90, 0.2);
+}
+
+.workLocationTag {
+  background: rgba(11, 11, 13, 0.04);
+  color: rgba(11, 11, 13, 0.7);
+  border: 1px solid rgba(11, 11, 13, 0.08);
+}
+
+.workClientName {
+  font-family: var(--font-headline);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--ink-black);
+  margin-bottom: 0.75rem;
+}
+
+.workChallenge {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--leading-normal);
+  color: var(--text-muted-light);
+}
+
+.workRowMetric {
+  position: relative;
+  padding: 1.5rem 0;
+}
+
+.metricBig {
+  font-family: var(--font-headline);
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: var(--electric-red);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.metricSub {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted-light);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.workRowAction {
+  margin-top: 0.5rem;
+}
+
+.workLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink-black);
+  text-decoration: none;
+  transition: all 0.25s var(--ease-calm);
+}
+
+.workLink:hover {
+  color: var(--electric-red);
+  transform: translateX(4px);
+}
+
+.workRowMockup {
+  width: 100%;
+}
+
+.mockupImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================================
+   10. FINAL CTA BANNER (Studio Light Glass)
+   ============================================ */
+.finalCta {
+  padding: 8rem 0;
+  text-align: center;
+}
+
+.ctaContent {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4.5rem 3rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(11, 11, 13, 0.1);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.ctaTitle {
+  font-family: var(--font-headline);
+  font-size: clamp(2.25rem, 1.8rem + 2.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--ink-black);
+  margin-bottom: 1.5rem;
+  letter-spacing: var(--tracking-tight);
+}
+
+.ctaSubtext {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  color: var(--text-muted-light);
+  line-height: 1.6;
+  margin-bottom: 2.75rem;
+  max-width: 620px;
+}
+
+.ctaActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.microCopy {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted-light);
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+@media (max-width: 1024px) {
+  .valueGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .audienceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .whyGrid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .workRow {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 2.5rem 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding-block: 4.5rem;
+  }
+
+  .problemSection {
+    padding: 4rem 0;
+  }
+
+  .valueSection {
+    padding: 3rem 0 3.5rem;
+  }
+
+  .finalCta {
+    padding: 4.5rem 0;
+  }
+
+  .valueItem {
+    padding: 1.75rem 1.5rem;
+  }
+
+  .audienceCard {
+    padding: 2rem 1.5rem;
+  }
+
+  .workRow {
+    padding: 1.75rem 1.5rem;
+  }
+
+  .convergingContainer {
+    padding: 2rem 1.5rem;
+  }
+
+  .sectionHeaderCenter {
+    margin: 0 auto 2.5rem;
+  }
+
+  .workHeader {
+    margin-bottom: 2rem;
+  }
+
+  .workList {
+    gap: 2rem;
+  }
+
+  .workTags {
+    flex-wrap: wrap;
+  }
+
+  .workClientName {
+    font-size: 1.65rem;
+  }
+
+  .metricBig {
+    font-size: 1.85rem;
+  }
+
+  .highlightLine {
+    display: inline;
+    background: linear-gradient(180deg, transparent 72%, rgba(255, 60, 90, 0.22) 72%);
+  }
+
+  .underlineSvg {
+    display: none;
+  }
+
+  .valueGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .whyPillars {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .workHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .ctaActions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.85rem;
+  }
+
+  .ctaActions a,
+  .ctaActions button {
+    width: 100%;
+  }
+
+  .editorialQuote {
+    font-size: 1.35rem;
+  }
+
+  .ctaContent {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding-block: 3rem;
+  }
+
+  .valueItem {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .audienceCard {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .workRow {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .convergingContainer {
+    padding: 1.5rem 1rem;
+    max-width: 100%;
+  }
+
+  .arrowsSvg {
+    width: 140px;
+  }
+
+  .sectionHeaderCenter {
+    margin: 0 auto 2rem;
+  }
+
+  .ctaContent {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .ctaTitle {
+    font-size: clamp(1.75rem, 1.5rem + 2vw, 2.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .underlineSvg path,
+  .arrowPath,
+  .arrowPathRight,
+  .arrowHead,
+  .arrowHeadRight,
+  .centerDot {
+    transition: none !important;
+  }
+}

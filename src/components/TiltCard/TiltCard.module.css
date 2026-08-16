@@ -1,0 +1,75 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glow {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  right: 5%;
+  bottom: 5%;
+  background: var(--gradient-primary);
+  filter: blur(40px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 0;
+  border-radius: var(--radius-md);
+}
+
+.wrapper:hover .glow {
+  opacity: 0.3;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: var(--surface-dark);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform 0.1s ease-out; /* fast transition for smooth mouse track */
+  will-change: transform;
+}
+
+.wrapper:not(:hover) .card {
+  transition: transform 0.5s ease-out; /* slower return to flat */
+}
+
+/* Browser Frame */
+.browserFrame {
+  height: 24px;
+  background: rgba(247, 245, 240, 0.05);
+  border-bottom: 1px solid var(--border-dark);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(247, 245, 240, 0.2);
+}
+
+.content {
+  position: relative;
+  /* child images/components will fill this */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .wrapper:not(:hover) .card {
+    transition: none;
+    transform: none !important;
+  }
+}

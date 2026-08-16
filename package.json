@@ -1,25 +1,26 @@
 {
-  "name": "blinxlab",
-  "version": "1.0.0",
-  "description": "A polished, responsive, and performance-focused website for **Blinx Lab**, a digital marketing and web development agency that helps small businesses build an online presence, get discovered, and stay relevant.",
-  "main": "server.js",
+  "name": "blinx-",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/blinxlabofficial-maker/blinxlab-main.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/blinxlabofficial-maker/blinxlab-main/issues"
-  },
-  "homepage": "https://github.com/blinxlabofficial-maker/blinxlab-main#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "lucide-react": "^1.31.0",
+    "mongodb": "^7.5.0",
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.1",
+    "typescript": "^5"
   }
 }

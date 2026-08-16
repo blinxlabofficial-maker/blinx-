@@ -1,0 +1,67 @@
+.blob {
+  position: absolute;
+  width: 50vw;
+  height: 50vw;
+  max-width: 600px;
+  max-height: 600px;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  animation: drift 15s ease-in-out infinite alternate;
+}
+
+.primary {
+  background: var(--gradient-primary);
+}
+
+.dark {
+  background: var(--gradient-dark);
+}
+
+/* Positions */
+.top-left {
+  top: -10%;
+  left: -10%;
+}
+
+.top-right {
+  top: -10%;
+  right: -10%;
+}
+
+.bottom-left {
+  bottom: -10%;
+  left: -10%;
+}
+
+.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: rotateCenter 60s linear infinite;
+}
+
+/* Tracking mode overrides idle drift transform if tracking is active */
+.tracking {
+  animation: none; 
+}
+
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, 15px) scale(1.05); }
+  100% { transform: translate(-10px, -20px) scale(0.95); }
+}
+
+@keyframes rotateCenter {
+  0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+  50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.1); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob {
+    animation: none !important;
+  }
+}

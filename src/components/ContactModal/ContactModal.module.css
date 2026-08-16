@@ -1,0 +1,150 @@
+/* ============================================
+   GLOBAL CONTACT MODAL POPUP — Compact Luxury Style
+   ============================================ */
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow-y: auto;
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modalContent {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: #F8F7F4;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(11, 11, 13, 0.08);
+  animation: slideUpModal 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(11, 11, 13, 0.05);
+  border: 1px solid rgba(11, 11, 13, 0.08);
+  color: var(--ink-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: var(--electric-red);
+  color: #FFFFFF;
+  border-color: var(--electric-red);
+  transform: rotate(90deg);
+}
+
+/* Compact Modal Header */
+.modalHeader {
+  padding: 1.85rem 1.6rem 0.9rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(11, 11, 13, 0.05);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 247, 244, 0.7) 100%);
+}
+
+.badgeWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.75rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(11, 11, 13, 0.08);
+  border-radius: var(--radius-full);
+  margin-bottom: 0.65rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.badgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--electric-red);
+}
+
+.badgeLabel {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--ink-black);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.modalTitle {
+  font-family: var(--font-headline);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--ink-black);
+  line-height: 1.15;
+  margin-bottom: 0.35rem;
+}
+
+.modalSubtitle {
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  color: var(--text-muted-light);
+  line-height: 1.45;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+/* Modal Form Wrapper */
+.modalFormWrapper {
+  padding: 1rem 1.6rem 1.5rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpModal {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .modalContent {
+    max-width: 95vw;
+    border-radius: var(--radius-lg);
+  }
+
+  .modalHeader {
+    padding: 1.5rem 1.25rem 0.75rem;
+  }
+
+  .modalFormWrapper {
+    padding: 0.85rem 1.25rem 1.25rem;
+  }
+
+  .modalTitle {
+    font-size: 1.3rem;
+  }
+}

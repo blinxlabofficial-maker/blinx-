@@ -1,0 +1,84 @@
+/* ============================================
+   WORDMARK LOGO — Exact blinx_ Identity
+   ============================================ */
+
+.wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-headline), var(--font-syne), -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  user-select: none;
+  line-height: 1;
+}
+
+/* Sizing Tokens */
+.sm {
+  font-size: 1.45rem;
+}
+
+.md {
+  font-size: 2.25rem;
+}
+
+.lg {
+  font-size: 3.5rem;
+}
+
+.xl {
+  font-size: 4.5rem;
+}
+
+/* "blin" text */
+.blin {
+  color: currentColor;
+  display: inline-block;
+}
+
+/* "x" character */
+.x {
+  color: var(--electric-red, #FF3C5A);
+  display: inline-block;
+}
+
+/* Blinking Voltage Yellow Pill Underscore */
+.underscore {
+  display: inline-block;
+  width: 0.65em;
+  height: 0.14em;
+  background-color: var(--voltage-yellow, #FFD600);
+  border-radius: 9999px;
+  margin-left: 0.12em;
+  vertical-align: baseline;
+  transform: translateY(0.04em);
+  animation: blinkCursor 1.05s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(255, 214, 0, 0.4);
+}
+
+@keyframes blinkCursor {
+  0%, 100% {
+    opacity: 1;
+    transform: translateY(0.04em) scale(1);
+  }
+  50% {
+    opacity: 0.08;
+    transform: translateY(0.04em) scale(0.92);
+  }
+}
+
+@media (max-width: 768px) {
+  .lg { font-size: clamp(2.25rem, 2rem + 2vw, 3.5rem); }
+  .xl { font-size: clamp(2.75rem, 2.2rem + 3vw, 4.5rem); }
+}
+@media (max-width: 480px) {
+  .md { font-size: 1.85rem; }
+  .lg { font-size: 2.25rem; }
+  .xl { font-size: 2.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .underscore {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}

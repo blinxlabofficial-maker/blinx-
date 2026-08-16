@@ -1,0 +1,166 @@
+/* ============================================
+   BLINX LAB — Design Tokens (Clean, Calm & Glassmorphism)
+   ============================================ */
+
+:root {
+  /* ---- Core Colors ---- */
+  --ink-black: #0B0B0D;
+  --ink-black-rgb: 11, 11, 13;
+  --ink-surface: #121316;
+  --ink-card: #17181D;
+  --ink-card-hover: #1D1E24;
+
+  --studio-white: #F8F7F4;
+  --studio-white-rgb: 248, 247, 244;
+  --studio-surface: #FFFFFF;
+  --studio-card: #FFFFFF;
+  --studio-muted: #EFECE6;
+
+  --electric-red: #FF3C5A;
+  --electric-red-rgb: 255, 60, 90;
+  --voltage-yellow: #FFD600;
+  --voltage-yellow-rgb: 255, 214, 0;
+
+  /* ---- Refined Gradients ---- */
+  --gradient-primary: linear-gradient(135deg, #FF3C5A 0%, #FFAE00 60%, #FFD600 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(255, 60, 90, 0.12) 0%, rgba(255, 214, 0, 0.06) 100%);
+  --gradient-dark: linear-gradient(180deg, #0B0B0D 0%, #141519 100%);
+  --gradient-card-dark: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  --gradient-card-light: linear-gradient(180deg, #FFFFFF 0%, #FAF9F6 100%);
+  --gradient-glow: radial-gradient(circle, rgba(255, 60, 90, 0.22) 0%, rgba(255, 214, 0, 0.08) 50%, transparent 75%);
+  --gradient-hairline: linear-gradient(90deg, transparent, rgba(255, 60, 90, 0.5), rgba(255, 214, 0, 0.5), transparent);
+  --gradient-hairline-dark: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  --gradient-hairline-light: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+
+  /* ---- Glassmorphism Tokens ---- */
+  --glass-dark: rgba(23, 24, 29, 0.65);
+  --glass-dark-hover: rgba(28, 30, 36, 0.85);
+  --glass-dark-elevated: rgba(18, 19, 23, 0.88);
+  --glass-light: rgba(255, 255, 255, 0.75);
+  --glass-light-hover: rgba(255, 255, 255, 0.95);
+  --glass-blur-sm: 8px;
+  --glass-blur-md: 16px;
+  --glass-blur-lg: 24px;
+  --glass-border-dark: rgba(255, 255, 255, 0.08);
+  --glass-border-dark-hover: rgba(255, 255, 255, 0.2);
+  --glass-border-light: rgba(11, 11, 13, 0.08);
+  --glass-border-light-hover: rgba(11, 11, 13, 0.16);
+  --glass-inner-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  --glass-inner-highlight-light: inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+
+  /* ---- Derived / Semantic Colors ---- */
+  --surface-dark: var(--ink-black);
+  --surface-light: var(--studio-white);
+  --text-on-dark: #F8F7F4;
+  --text-on-light: #0B0B0D;
+  --text-muted-dark: rgba(248, 247, 244, 0.65);
+  --text-muted-light: rgba(11, 11, 13, 0.6);
+  --border-dark: rgba(248, 247, 244, 0.08);
+  --border-dark-hover: rgba(248, 247, 244, 0.18);
+  --border-light: rgba(11, 11, 13, 0.08);
+  --border-light-hover: rgba(11, 11, 13, 0.16);
+
+  /* ---- Typography ---- */
+  --font-headline: var(--font-syne), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: var(--font-dm-mono), monospace;
+
+  /* Fluid Type Scale */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.15vw, 0.8125rem);
+  --text-sm: clamp(0.8125rem, 0.78rem + 0.2vw, 0.875rem);
+  --text-base: clamp(0.9375rem, 0.9rem + 0.25vw, 1.0625rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
+  --text-xl: clamp(1.35rem, 1.25rem + 0.5vw, 1.625rem);
+  --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
+  --text-3xl: clamp(1.85rem, 1.6rem + 1.6vw, 3rem);
+  --text-4xl: clamp(2.25rem, 1.9rem + 2.5vw, 4.25rem);
+  --text-5xl: clamp(2.5rem, 2rem + 3.8vw, 5.75rem);
+
+  /* Line Heights */
+  --leading-tight: 1.05;
+  --leading-snug: 1.2;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  /* Letter Spacing */
+  --tracking-tighter: -0.04em;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+  --tracking-widest: 0.2em;
+
+  /* Font Weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  /* ---- Spacing ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 2.5rem;
+  --space-8: 3rem;
+  --space-9: 4rem;
+  --space-10: 5rem;
+  --space-11: 6rem;
+  --space-12: 8rem;
+
+  /* Section Spacing */
+  --section-pad-y: clamp(3.5rem, 3rem + 4vw, 9rem);
+  --section-pad-x: clamp(1.25rem, 0.8rem + 3vw, 4rem);
+
+  /* Containers */
+  --container-max: 1240px;
+  --container-wide: 1360px;
+  --container-narrow: 760px;
+
+  /* ---- Motion & Transitions ---- */
+  --ease-calm: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --duration-fast: 180ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-calm: 800ms;
+
+  /* ---- Soft Shadows & Ambient Lighting ---- */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
+  --shadow-dark-card: 0 8px 32px rgba(0, 0, 0, 0.36);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --shadow-glass-elevated: 0 16px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --shadow-glow-red: 0 0 35px rgba(255, 60, 90, 0.25);
+  --shadow-glow-yellow: 0 0 35px rgba(255, 214, 0, 0.2);
+
+  /* ---- Z-index ---- */
+  --z-base: 0;
+  --z-above: 10;
+  --z-sticky: 100;
+  --z-nav: 500;
+  --z-overlay: 900;
+  --z-modal: 1000;
+
+  /* ---- Border Radius ---- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+}
+
+/* ---- Mobile Token Overrides ---- */
+@media (max-width: 480px) {
+  :root {
+    --section-pad-y: clamp(2.5rem, 2rem + 3vw, 4rem);
+    --radius-xl: 18px;
+    --radius-lg: 14px;
+  }
+}

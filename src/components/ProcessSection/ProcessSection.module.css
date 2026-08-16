@@ -1,0 +1,366 @@
+/* ============================================
+   PROCESS SECTION — Studio Light (4-Step Execution Framework)
+   ============================================ */
+
+.section {
+  position: relative;
+  background-color: var(--surface-light, #F8F7F4);
+  color: var(--ink-black);
+  padding: 7rem 0 6rem;
+  overflow: hidden;
+}
+
+.anchorOffset {
+  position: absolute;
+  top: -80px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+}
+
+/* Header */
+.header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 4.5rem;
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--electric-red);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-family: var(--font-headline);
+  font-size: clamp(2.15rem, 1.8rem + 2.2vw, 3.5rem);
+  font-weight: 800;
+  color: var(--ink-black);
+  line-height: 1.12;
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: 1.25rem;
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+  color: var(--text-muted-light);
+  line-height: 1.6;
+}
+
+/* Timeline 4-Card Grid */
+.timelineGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
+  margin-bottom: 4.5rem;
+}
+
+.stepCard {
+  position: relative;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(11, 11, 13, 0.08);
+  border-radius: var(--radius-xl);
+  padding: 2.25rem 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  transition: transform 0.35s var(--ease-calm), 
+              box-shadow 0.35s var(--ease-calm), 
+              border-color 0.35s var(--ease-calm),
+              background-color 0.35s var(--ease-calm);
+  overflow: hidden;
+}
+
+.stepCard:hover,
+.stepCardActive {
+  transform: translateY(-6px);
+  background: #FFFFFF;
+  border-color: rgba(11, 11, 13, 0.16);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.07);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+}
+
+.iconBox {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background: rgba(11, 11, 13, 0.035);
+  border: 1px solid rgba(11, 11, 13, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.stepCard:hover .iconBox {
+  transform: scale(1.08);
+}
+
+.badgeGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.timelineBadge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted-light);
+  background: rgba(11, 11, 13, 0.04);
+  border: 1px solid rgba(11, 11, 13, 0.08);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+}
+
+.stepNumber {
+  font-family: var(--font-syne);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: rgba(11, 11, 13, 0.2);
+  line-height: 1;
+}
+
+.stepCard:hover .stepNumber {
+  color: var(--ink-black);
+}
+
+.cardHeader {
+  margin-bottom: 1rem;
+}
+
+.phaseLabel {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--electric-red);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  font-family: var(--font-headline);
+  font-size: 1.28rem;
+  font-weight: 700;
+  color: var(--ink-black);
+  line-height: 1.25;
+}
+
+.cardDesc {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-muted-light);
+  line-height: 1.55;
+  margin-bottom: 1.75rem;
+}
+
+/* Deliverables Section */
+.deliverablesSection {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px dashed rgba(11, 11, 13, 0.1);
+}
+
+.deliverablesHeading {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-black);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+
+.deliverablesList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.deliverableItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  color: var(--ink-black);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.cardAccentBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  opacity: 0.8;
+  transition: height 0.25s ease, opacity 0.25s ease;
+}
+
+.stepCard:hover .cardAccentBar {
+  height: 5px;
+  opacity: 1;
+}
+
+/* Bottom Fast-Track Banner */
+.bottomBanner {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(11, 11, 13, 0.08);
+  border-radius: var(--radius-2xl);
+  padding: 2.25rem 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.bannerLeft {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.sparkleIconBox {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 60, 90, 0.08);
+  border: 1px solid rgba(255, 60, 90, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--electric-red);
+  flex-shrink: 0;
+}
+
+.bannerTitle {
+  font-family: var(--font-headline);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--ink-black);
+  margin-bottom: 0.35rem;
+}
+
+.bannerText {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--text-muted-light);
+  line-height: 1.5;
+}
+
+.bannerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: var(--ink-black);
+  color: #FFFFFF;
+  padding: 0.9rem 1.8rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  transition: all 0.25s var(--ease-calm);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.bannerBtn:hover {
+  background: var(--electric-red);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 60, 90, 0.35);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1200px) {
+  .timelineGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 860px) {
+  .bottomBanner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 1.75rem;
+  }
+
+  .bannerBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 4.5rem 0;
+  }
+
+  .header {
+    margin-bottom: 3rem;
+  }
+
+  .timelineGrid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+
+  .stepCard {
+    padding: 1.75rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 3.5rem 0;
+  }
+
+  .bannerLeft {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
